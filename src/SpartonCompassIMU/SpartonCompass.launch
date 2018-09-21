@@ -1,0 +1,8 @@
+<launch>
+  <node pkg="SpartonCompassIMU" type="SpartonCompassIMU.py" name="SpartonCompassIMU" respawn="true" output="screen">
+    <param name="port" value="/dev/sensors/ftdi_SP_AHRS-8" />
+    <param name="baud" value="115200" />
+    <param name="printmodulus" value="4" />
+
+  </node>
+</launch>

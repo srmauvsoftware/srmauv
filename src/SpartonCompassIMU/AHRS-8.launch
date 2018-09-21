@@ -1,0 +1,18 @@
+<launch>
+  <node pkg="SpartonCompassIMU" type="SpartonCompassIMU.py" name="SpartonCompassIMU" respawn="true">
+    <param name="port" value="/dev/sensors/ftdi_SP_AHRS-8" />
+    <param name="baud" value="115200" />
+    <!--printmodulus 60:10Hz 40:15~17  35:17~18Hz 30:21Hz 25:23~27Hz ,20: 30~35Hz,15:35~55Hz 10: 55~76 Hz,  5: 70~100 Hz, 1:70~100 Hz -->
+    <param name="printmodulus" value="1" />
+    
+    <!--# Detroit Magnetic declination           : 2013-06-10 	7 30' 6"  W changing by  2.7' W per year = -7 30'6"=-7.501666666666667 degree -->
+    <!--# Oakland University Magnetic declination: 2013-06-10 	7 27' 46" W changing by  2.7' W per year =         =-7.462777777777778 degree -->
+    <param name="declination" value="-7.462777777777778" />   
+    
+    <!-- # By defaule IMU use Megnatic North as zero degree in Quaternion  -->
+    <!-- # If we want to use it directly as Global Heading, with GPS-UTM x,y  East is our zero -->
+    <param name="UseEastAsZero" value="True" />
+
+
+  </node>
+</launch>

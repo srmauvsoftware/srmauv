@@ -1,0 +1,4 @@
+<launch>
+<include file="$(find tests)/launch/depth_controller_test.launch"/>
+<include file="$(find tests)/launch/heading_controller_test.launch"/>
+</launch>
