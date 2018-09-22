@@ -1,8 +1,8 @@
 #goal definition
-float32 heading_setpoint
+float64 heading_setpoint
 ---
 #result definition
-float32 heading_final
+float64 heading_final
 ---
 #feedback
-float32 heading_error
+float64 heading_error

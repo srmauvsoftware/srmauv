@@ -1,8 +1,8 @@
 #goal definition
-float32 depth_setpoint
+float64 depth_setpoint
 ---
 #result definition
-float32 depth_final
+float64 depth_final
 ---
 #feedback
-float32 depth_error
+float64 depth_error
