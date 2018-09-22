@@ -1,0 +1,6 @@
+<launch>
+
+<node pkg="alpheus_actions" type="depthServer.py" name="depthServer" output="screen"/>
+<node pkg="alpheus_actions" type="headingServer.py" name="headingServer" output="screen"/>
+
+</launch>
