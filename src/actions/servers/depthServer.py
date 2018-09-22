@@ -14,7 +14,7 @@ class depthAction(object):
 
     def __init__(self, name):
         self.pub = rospy.Publisher('/depth_setpoint', Float64, queue_size=10)
-        rospy.Subscriber("/pressure", Float64, self.depth_cb)
+        rospy.Subscriber("/depth", Float64, self.depth_cb)
         self._da = name
         self._ds = actionlib.SimpleActionServer(
             self._da, \
@@ -37,10 +37,10 @@ class depthAction(object):
                 self._ds.set_preempted()
                 success = False
                 break
-            self._feedback.depth_error = self._pressure
+            self._feedback.depth_error = self._depth
             self._ds.publish_feedback(self._feedback)
-            self._feedback.depth_error = self._pressure - goal.depth_setpoint
-            rospy.loginfo('%s : Going to Pressure %f with Error : %f',\
+            self._feedback.depth_error = self._depth - goal.depth_setpoint
+            rospy.loginfo('%s : Going to Depth %f with Error : %f',\
                 self._da , \
                 goal.depth_setpoint, \
                 self._feedback.depth_error)
