@@ -1,30 +1,26 @@
+#!/usr/bin/env python
 import rospy
 from std_msgs.msg import Float64
-from thruster.msg import depthThruster
+from thrusters.msg import depthThruster
+rospy.init_node('depth_controller', anonymous=True)
+pub = rospy.Publisher('/depth_thruster', depthThruster, queue_size=10)
+r = rospy.Rate(10)
 
 def depthCb(data):
-    rospy.loginfo(data)
-    pub = rospy.Publisher('/depth_thruster', depthThruster)
-    r = rospy.Rate(10)
     msg = depthThruster()
     msg.td1 += data.data
     msg.td2 += data.data
     msg.td3 += data.data
     msg.td4 += data.data
-
-    while not rospy.is_shutdown():
-        rospy.loginfo(msg)
-        pub.publish(msg)
-        r.sleep()
+    pub.publish(msg)
     
 def depth_controller():
-
-    rospy.init_node('depth_controller', anonymous=True)
-
-    rospy.Subscriber("/control_effort", Float64, depthCb())
+    rospy.Subscriber('/control_effort', Float64, depthCb)
 
     # spin() simply keeps python from exiting until this node is stopped
     rospy.spin()
 
 if __name__ == '__main__':
-    depth_controller()
+    try:
+	depth_controller()
+    except rospy.ROSInterruptException: pass
