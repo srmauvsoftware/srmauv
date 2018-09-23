@@ -8,7 +8,7 @@ def depthClient():
     client = actionlib.SimpleActionClient('depth_server', \
     actions.msg.depthAction)
     client.wait_for_server()
-    goal = actions.msg.depthGoal(depth_setpoint=100)
+    goal = actions.msg.depthGoal(depth_setpoint=15)
     client.send_goal(goal)
     client.wait_for_result()
     return client.get_result()
