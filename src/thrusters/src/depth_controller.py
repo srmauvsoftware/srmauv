@@ -2,9 +2,6 @@
 import rospy
 from std_msgs.msg import Float64
 from thrusters.msg import depthThruster
-rospy.init_node('depth_controller', anonymous=True)
-pub = rospy.Publisher('/depth_thruster', depthThruster, queue_size=10)
-r = rospy.Rate(10)
 
 def depthCb(data):
     msg = depthThruster()
@@ -15,8 +12,11 @@ def depthCb(data):
     pub.publish(msg)
     
 def depth_controller():
+    rospy.init_node('depth_controller', anonymous=True)
+    pub = rospy.Publisher('/depth_thruster', depthThruster, queue_size=10)
+    rospy.Rate(10)
     rospy.Subscriber('/control_effort', Float64, depthCb)
-
+    
     # spin() simply keeps python from exiting until this node is stopped
     rospy.spin()
 
