@@ -10,6 +10,10 @@
 <node pkg="actions" type="headingClient.py" name="headingClient" output="screen"/>
 <node pkg="actions" type="depthClient.py" name="depthClient" output="screen"/>
 
+<!-- to test standalone -->
+<node pkg="tests" type="depth.py" name="depth" output="screen"/>
+<node pkg="tests" type="heading.py" name="heading" output="screen"/>
+
 <node pkg="thrusters" type="depth_controller.py" name="depth_controller" output="screen"/>
 <node pkg="thrusters" type="heading_controller.py" name="heading_controller" output="screen"/>
 
