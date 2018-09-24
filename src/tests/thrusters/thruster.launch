@@ -1,7 +1,5 @@
 <launch>
 
-<include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch"/>
-
 <include file="$(find tests)/launch/depth_controller_test.launch"/>
 <include file="$(find tests)/launch/heading_controller_test.launch"/>
 
@@ -16,5 +14,5 @@
 
 <node pkg="thrusters" type="depth_controller.py" name="depth_controller" output="screen"/>
 <node pkg="thrusters" type="heading_controller.py" name="heading_controller" output="screen"/>
-
 </launch>
+

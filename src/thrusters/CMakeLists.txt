@@ -12,6 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  dynamic_reconfigure
 )
 
 ## System dependencies are found with CMake's conventions
@@ -50,8 +51,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## Generate messages in the 'msg' folder
  add_message_files(
    FILES
-   depthThruster.msg
-   vectorThruster.msg
+   ThrusterMsg.msg
  )
 
 ## Generate services in the 'srv' folder
@@ -89,10 +89,9 @@ find_package(catkin REQUIRED COMPONENTS
 ##     and list every .cfg file to be processed
 
 ## Generate dynamic reconfigure parameters in the 'cfg' folder
- generate_dynamic_reconfigure_options(
-   cfg/vectorThruster.cfg
-   cfg/depthThruster.cfg
- )
+#generate_dynamic_reconfigure_options(
+#  cfg/ThrusterCfg.cfg
+#)
 
 ###################################
 ## catkin specific configuration ##
@@ -134,8 +133,8 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-# add_executable(${PROJECT_NAME}_node src/thrusters_node.cpp)
-
+#add_executable(${PROJECT_NAME}_thruster src/thruster.py)
+#add_dependencies(${PROJECT_NAME}_thruster ${PROJECT_NAME}_gencfg)
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
