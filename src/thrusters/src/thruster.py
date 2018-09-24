@@ -3,8 +3,8 @@ import rospy
 from std_msgs.msg import Float64
 from thrusters.msg import ThrusterMsg
 
-from dynamic_reconfigure.server import Server
-from thrusters.cfg import ThrusterCfgConfig
+#from dynamic_reconfigure.server import Server
+#from thrusters.cfg import ThrusterCfgConfig
 
 
 class Thruster:
@@ -13,7 +13,7 @@ class Thruster:
         self.thrusterPub = rospy.Publisher('/thruster', ThrusterMsg, queue_size=10)
         rospy.Rate(10)
         rospy.Subscriber('/control_effort', Float64, self.thrusterCb)
-        self.srv = Server(ThrusterCfgConfig, self.thrusterCb)
+        #self.srv = Server(ThrusterCfgConfig, self.thrusterCb)
         rospy.spin()
 
     def thrusterCb(self, config, level=None):
@@ -29,3 +29,5 @@ if __name__ == '__main__':
         thruster = Thruster()
 
     except rospy.ROSInterruptException: pass
+
+#<node pkg="thrusters" type="thruster.py" name="thruster" output="screen" />
