@@ -22,5 +22,5 @@ def depth_controller():
 
 if __name__ == '__main__':
     try:
-	depth_controller()
+        depth_controller()
     except rospy.ROSInterruptException: pass
