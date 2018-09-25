@@ -1,7 +1,7 @@
 <launch>
 
 <node name="depth" pkg="tests" type="depth.py"/>
-<node name="depth_setpoint" pkg="tests" type="depth_setpoint.py"/>
+<!--node name="depth_setpoint" pkg="tests" type="depth_setpoint.py"/-->
 
 <node name="controller" pkg="pid" type="controller" ns="depth_controller" output="screen" >
       <param name="Kp" value="5.0" />

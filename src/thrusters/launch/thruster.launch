@@ -1,0 +1,13 @@
+<launch>
+
+<node name="thruster" pkg="thrusters" type="thruster.py" ns="depth_thruster" output="screen" >
+      <remap from="control_effort" to="/depth_controller/control_effort" />
+      <remap from="thruster" to="/depth_thruster" />
+</node>
+
+<node name="thruster" pkg="thrusters" type="thruster.py" ns="vector_thruster" output="screen" >
+      <remap from="control_effort" to="/heading_controller/control_effort" />
+      <remap from="thruster" to="/vector_thruster" />
+</node>
+
+</launch>

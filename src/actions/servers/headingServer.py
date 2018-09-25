@@ -20,6 +20,7 @@ class headingAction(object):
 
     def heading_cb(self, data):
         if(data < 0):
+            rospy.loginfo(data)
             self.heading_value = 360 + data
         else:
             self.heading_value = data
