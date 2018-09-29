@@ -2,8 +2,9 @@
 #include "depth.h"
 #include <ros.h>
 #include <ArduinoHardware.h>
-#include <alpheus_msgs/depthThruster.h>
-#include <alpheus_msgs/depth.h>
+#include <thrusters/ThrusterMsg.h>
+// #include <alpheus_msgs/depth.h>
+#include <std_msgs/Float64.h>
 #include <SimpleKalmanFilter.h>
 #include <std_msgs/Bool.h>
 
@@ -16,19 +17,20 @@ Servo td4;
 SimpleKalmanFilter pressureKF(1, 1, 0.01);
 
 ros::NodeHandle(nh);
-
-alpheus_msgs::depth depth;
-alpheus_msgs::depthThruster thruster;
+std_msgs::Float64 depth;
+// alpheus_msgs::depth depth;
+thrusters::ThrusterMsg thruster;
 std_msgs::Bool emergency;
 int pressure;
 static uint32_t currentTime,loopTime, fast_loop,time_elapsed, medium_loop, slow_loop;
 
 
-void getThrusterPWM(const alpheus_msgs::depthThruster &msg);
+// void getThrusterPWM(const alpheus_msgs::depthThruster &msg);
+void getThrusterPWM(const Thrusters.msg::depthThruster &msg);
 void getPressure(const alpheus_msgs::depth &depth);
 
 //ros::Subscriber<> emergency_pub("/emergency",&emergency);
-ros::Subscriber<alpheus_msgs::depthThruster>thruster_sub("/depthThruster", getThrusterPWM);
+ros::Subscriber<thrusters::ThrusterMsg>thruster_sub("/depthThruster", getThrusterPWM);
 ros::Publisher depth_pub("/depth", &depth);
 
 void setup(){
@@ -63,7 +65,7 @@ void loop(){
     runThrusters();
 
     depth.depth = pressure;
-    depth.pressure = pressure;
+    // depth.pressure = pressure;
     depth_pub.publish(&depth);
 
     nh.spinOnce();
