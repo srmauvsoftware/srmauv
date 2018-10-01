@@ -1,8 +1,8 @@
 
-#define TD1 2
-#define TD2 3
-#define TD3 6
-#define TD4 7
+#define TD1 10
+#define TD2 8
+#define TD3 4
+#define TD4 3
 
 #define PRESSURE 9 // US3000 pressure sensor
 #define LEAK 4
