@@ -17,19 +17,30 @@ Servo tfl;
 Servo trr;
 Servo trl;
 
+int t1 = 1500;
+int t2 = 1500;
+int t3 = 1500;
+int t4 = 1500;
+
+int t5 = 1500;
+int t6 = 1500;
+int t7 = 1500;
+int t8 = 1500;
+
+
 void depthMessageCb( const thrusters::ThrusterMsg& msg){
-  td1.write(msg.t1);
-  td2.write(msg.t2);
-  td3.write(msg.t3);
-  td4.write(msg.t4);
+  int t1 = msg.t1;
+  int t2 = msg.t2;
+  int t3 = msg.t3;
+  int t4 = msg.t4;
 }
 
 void vectorMessageCb( const thrusters::ThrusterMsg& msg)
 {
-  tfr.write(msg.t1);
-  tfl.write(msg.t2);
-  trr.write(msg.t3);
-  trl.write(msg.t4);
+  int t5 = msg.t1;
+  int t6 = msg.t2;
+  int t7 = msg.t3;
+  int t8 = msg.t4;
 }
 
 ros::Subscriber<thrusters::ThrusterMsg> depthSub("/depthThruster", &depthMessageCb );
@@ -66,6 +77,17 @@ void setup()
 
 void loop()
 {  
+  
+  td1.write(t1);
+  td2.write(t2);
+  td3.write(t3);
+  td4.write(t4);
+  
+  tfr.write(t5);
+  tfl.write(t6);
+  trr.write(t7);
+  trl.write(t8);
+  
   nh.spinOnce();
   delay(1);
 }

@@ -1,15 +1,14 @@
 
-#define TD1 2
-#define TD2 3
-#define TD3 6
-#define TD4 7
+#define TD1 5
+#define TD2 2
+#define TD3 9
+#define TD4 6
 
-#define TFR 10
+#define TFR 4
 #define TFL 8
-#define TRR 4
-#define TRL 3
+#define TRR 3
+#define TRL 10
 
-#define PRESSURE 9 // US3000 pressure sensor
 #define LCD 44
 
 #define DEPTHCONSTANT 0.7
