@@ -33,8 +33,10 @@ w - forward
 a - left
 s - backward
 d - right
-o - ascend
-l - descend
+o - surface
+l - sink
+m - yaw-left
+n - yaw-right
 r - reset
 q - quit
 --------------------
@@ -118,10 +120,10 @@ if __name__=="__main__":
                 dt.t2 = 1500
                 dt.t3 = 1500
                 dt.t4 = 1500
-                vt.t1 = 1550
-                vt.t2 = 1550
-                vt.t3 = 1550
-                vt.t4 = 1550
+                vt.t1 = 1500
+                vt.t2 = 1500
+                vt.t3 = 1500
+                vt.t4 = 1500
                 break
 
             elif key == 'r':
@@ -129,16 +131,33 @@ if __name__=="__main__":
                 dt.t2 = 1500
                 dt.t3 = 1500
                 dt.t4 = 1500
-                vt.t1 = 1550
-                vt.t2 = 1550
-                vt.t3 = 1550
-                vt.t4 = 1550
+                vt.t1 = 1500
+                vt.t2 = 1500
+                vt.t3 = 1500
+                vt.t4 = 1500
                 print("resetting vector and depth to 1500")
                 vectorPub.publish(vt)
                 depthPub.publish(dt)
 
+            elif key == 'm':
+		vt.t1 = 1450
+		vt.t2 = 1550
+		vt.t3 = 1450
+		vt.t4 = 1550
+		print("Yaw Right")
+                vectorPub.publish(vt)
+
+            elif key == 'n':
+		vt.t1 = 1550
+		vt.t2 = 1450
+		vt.t3 = 1550
+		vt.t4 = 1450
+		print("Yaw Left")
+                vectorPub.publish(vt)
+
             else:
                 print("key not binded")
+		print(key)
 
     except rospy.ROSInterruptException:
         pass

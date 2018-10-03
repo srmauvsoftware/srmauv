@@ -43,8 +43,8 @@
 #
 
 
-#import roslib; roslib.load_manifest('SpartonCompassIMU')
-#import rospy
+import roslib; roslib.load_manifest('SpartonCompassIMU')
+import rospy
 from std_msgs.msg import String
 from geometry_msgs.msg import Pose2D
 
