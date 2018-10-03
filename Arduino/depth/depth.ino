@@ -29,18 +29,18 @@ int t8 = 1500;
 
 
 void depthMessageCb( const thrusters::ThrusterMsg& msg){
-  int t1 = msg.t1;
-  int t2 = msg.t2;
-  int t3 = msg.t3;
-  int t4 = msg.t4;
+  t1 = msg.t1;
+  t2 = msg.t2;
+  t3 = msg.t3;
+  t4 = msg.t4;
 }
 
 void vectorMessageCb( const thrusters::ThrusterMsg& msg)
 {
-  int t5 = msg.t1;
-  int t6 = msg.t2;
-  int t7 = msg.t3;
-  int t8 = msg.t4;
+  t5 = msg.t1;
+  t6 = msg.t2;
+  t7 = msg.t3;
+  t8 = msg.t4;
 }
 
 ros::Subscriber<thrusters::ThrusterMsg> depthSub("/depthThruster", &depthMessageCb );
