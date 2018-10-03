@@ -1,77 +1,170 @@
 #!/usr/bin/env python
-import roslib;
+#import roslib; roslib.load_manifest('teleop')
+import roslib
 import rospy
 
 from thrusters.msg import ThrusterMsg
 
-import sys, select, termios, tty
+import sys, select, termios, tty, threading
 
 msg = """
+
+  !depth!
+
+td3--F--td1
+ |       |
+ |       |
+ |       |
+ |       |
+td4-----td2
+
+ !heading!
+
+tfl--F--tfr
+ |       |
+ |       |
+ |       |
+ |       |
+trl-----trr
+
 Alpheus Testing Mode - Reading From Keyboard
 --------------------
-Arrow Key Up - Forward
-Arrow Key Down - Backward
-Arrow Key Right - Right
-Arrow Key Left - Left
-Key W - Depth UP
-Key S - Depth Down
+w - forward
+a - left
+s - backward
+d - right
+o - ascend
+l - descend
+r - reset
+q - quit
 --------------------
 """
+
 
 def getKey():
     tty.setraw(sys.stdin.fileno())
     select.select([sys.stdin], [], [], 0)
     key = sys.stdin.read(1)
     termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
+    #print(key)
     return key
 
 if __name__=="__main__":
     print(msg)
     settings = termios.tcgetattr(sys.stdin)
 
-    pub = rospy.Publisher('/depthThruster', ThrusterMsg, queue_size=1)
+    depthPub = rospy.Publisher('/depthThruster', ThrusterMsg, queue_size=1)
+    vectorPub = rospy.Publisher('/vectorThruster', ThrusterMsg, queue_size=1)
     rospy.init_node('teleop')
 
     try:
         while(1):
             key = getKey()
+
             dt = ThrusterMsg()
-            if key == 'W':
+            vt = ThrusterMsg()
+
+            if key == 'o':
                 dt.t1 = 1450
                 dt.t2 = 1450
                 dt.t3 = 1450
                 dt.t4 = 1450
                 print("Moving Up")
-            elif key == 'Z':
-                dt.t1 = 1450
+                depthPub.publish(dt)
+
+            elif key == 'l':
+                dt.t1 = 1550
                 dt.t2 = 1550
-                dt.t3 = 1450
-                dt.t4 = 1450
-                print("Moving Down") 
+                dt.t3 = 1550
+                dt.t4 = 1550
+                print("Moving Down")
+                depthPub.publish(dt)
+
+            elif key == 'w':
+                vt.t1 = 1550
+                vt.t2 = 1550
+                vt.t3 = 1550
+                vt.t4 = 1550
+                print("Moving forward")
+                vectorPub.publish(vt)
+
+            elif key == 'a':
+                vt.t1 = 1550
+                vt.t2 = 1450
+                vt.t3 = 1450
+                vt.t4 = 1550
+                print("Moving left")
+                vectorPub.publish(vt)
+
+            elif key == 's':
+                vt.t1 = 1450
+                vt.t2 = 1450
+                vt.t3 = 1450
+                vt.t4 = 1450
+                print("Moving backward")
+                vectorPub.publish(vt)
+
+            elif key == 'd':
+                vt.t1 = 1450
+                vt.t2 = 1550
+                vt.t3 = 1550
+                vt.t4 = 1450
+                print("Moving right")
+                vectorPub.publish(vt)
 
             elif key == 'q':
-                print("Quitting")
-                break
-
-            else:
+                print("resetting and quitting")
                 dt.t1 = 1500
                 dt.t2 = 1500
                 dt.t3 = 1500
                 dt.t4 = 1500
+                vt.t1 = 1550
+                vt.t2 = 1550
+                vt.t3 = 1550
+                vt.t4 = 1550
+                break
 
-            pub.publish(dt)
+            elif key == 'r':
+                dt.t1 = 1500
+                dt.t2 = 1500
+                dt.t3 = 1500
+                dt.t4 = 1500
+                vt.t1 = 1550
+                vt.t2 = 1550
+                vt.t3 = 1550
+                vt.t4 = 1550
+                print("resetting vector and depth to 1500")
+                vectorPub.publish(vt)
+                depthPub.publish(dt)
 
-    except Exception, e:
-        print e
+            else:
+                print("key not binded")
+
+    except rospy.ROSInterruptException:
+        pass
 
     finally:
-        t = ThrusterMsg()
-        t.t1 = 1500
-        t.t2 = 1500
-        t.t3 = 1500
-        t.t4 = 1500
-        pub.publish(t)
+        dt = ThrusterMsg()
+        vt = ThrusterMsg()
+
+        dt.t1 = 1500
+        dt.t2 = 1500
+        dt.t3 = 1500
+        dt.t4 = 1500
+
+        vt.t1 = 1500
+        vt.t2 = 1500
+        vt.t3 = 1500
+        vt.t4 = 1500
+
+        depthPub.publish(dt)
+        vectorPub.publish(vt)
         termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
+
+
+
+
+
 '''
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, unicode_literals, print_function
@@ -124,4 +217,3 @@ def main():
 if __name__ == "__main__":
     main()
 '''
-

@@ -1,7 +1,7 @@
 <launch>
 
-<node name="heading" pkg="tests" type="heading.py"/>
-<!--node name="heading_setpoint" pkg="tests" type="heading_setpoint.py"/-->
+<!--node name="heading" pkg="tests" type="heading.py"/-->
+<node name="heading_setpoint" pkg="tests" type="heading_setpoint.py"/>
 
 <node name="controller" pkg="pid" type="controller" ns="heading_controller" output="screen" >
       <param name="Kp" value="5.0" />
