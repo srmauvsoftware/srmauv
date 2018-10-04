@@ -9,6 +9,7 @@ class headingAction(object):
     _result = actions.msg.headingResult()
 
     def __init__(self, name):
+        self.pub = rospy.Publisher('/heading_setpoint', Float64, queue_size=10)
         rospy.Subscriber("/imu/HeadingTrue_degree/theta", Float64, self.heading_cb)
         self._ha = name
         self._hs = actionlib.SimpleActionServer(
@@ -20,16 +21,16 @@ class headingAction(object):
 
     def heading_cb(self, data):
         if(data < 0):
-            rospy.loginfo(data)
-            self.heading_value = 360 + data
+            self.heading_value = 360 + data.data
         else:
-            self.heading_value = data
+            self.heading_value = data.data
 
     def headingCallback(self, goal):
         r = rospy.Rate(10)
         success = True
-
+        new_heading = goal.heading_setpoint
         while(goal.heading_setpoint != self.heading_value):
+            self.pub.publish(new_heading)
             if self._hs.is_preempt_requested():
                 rospy.loginfo('%s : Preempted' % self._ha)
                 self._hs.set_preempted()
@@ -38,11 +39,10 @@ class headingAction(object):
             self._feedback.heading_error = self.heading_value
             self._hs.publish_feedback(self._feedback)
             self._feedback.heading_error = self.heading_value - goal.heading_setpoint
-            rospy.loginfo('%s : Going to Heading %f with Error : ',\
+            rospy.loginfo('%s : Going to Heading %f with Error : %f',\
                 self._ha, \
                 goal.heading_setpoint, \
                 self._feedback.heading_error)
-
             r.sleep()
 
         if success:
@@ -52,6 +52,6 @@ class headingAction(object):
 
 
 if __name__ == '__main__':
-    rospy.init_node('headingServer')
+    rospy.init_node('heading_server')
     server = headingAction(rospy.get_name())
     rospy.spin()

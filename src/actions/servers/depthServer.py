@@ -21,11 +21,9 @@ class depthAction(object):
         self._ds.start()
 
     def depth_cb(self, data):
-        rospy.loginfo(data)
         self._depth = data.data
 
     def depthCallback(self, goal):
-	#rospy.loginfo("Goal" + goal)
         r = rospy.Rate(10)
         success = True
         new_depth = goal.depth_setpoint

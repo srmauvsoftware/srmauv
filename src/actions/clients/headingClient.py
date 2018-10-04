@@ -2,14 +2,15 @@
 from __future__ import print_function
 import rospy
 import actionlib
-import alpheus_actions.msg
+import actions.msg
 
 def headingClient():
-    client = actionlib.SimpleActionClient('headingServer', \
-    alpheus_actions.msg.headingAction)
+    client = actionlib.SimpleActionClient('heading_server', \
+    actions.msg.headingAction)
     client.wait_for_server()
-    goal = alpheus_actions.msg.headingGoal(heading_setpoint=100)
+    goal = actions.msg.headingGoal(heading_setpoint=100)
     client.send_goal(goal)
+    rospy.loginfo("Heading Client Goal Sent")
     client.wait_for_result()
     return client.get_result()
 
