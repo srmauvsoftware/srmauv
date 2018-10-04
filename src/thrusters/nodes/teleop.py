@@ -3,7 +3,8 @@
 import roslib
 import rospy
 
-from thrusters.msg import ThrusterMsg
+from thrusters.msg import DepthThrusterMsg
+from thrusters.msg import VectorThrusterMsg
 
 import sys, select, termios, tty, threading
 
@@ -55,103 +56,103 @@ if __name__=="__main__":
     print(msg)
     settings = termios.tcgetattr(sys.stdin)
 
-    depthPub = rospy.Publisher('/depthThruster', ThrusterMsg, queue_size=1)
-    vectorPub = rospy.Publisher('/vectorThruster', ThrusterMsg, queue_size=1)
+    depthPub = rospy.Publisher('/depthThruster', DepthThrusterMsg, queue_size=1)
+    vectorPub = rospy.Publisher('/vectorThruster', VectorThrusterMsg, queue_size=1)
     rospy.init_node('teleop')
 
     try:
         while(1):
             key = getKey()
 
-            dt = ThrusterMsg()
-            vt = ThrusterMsg()
+            dt = DepthThrusterMsg()
+            vt = VectorThrusterMsg()
 
             if key == 'o':
-                dt.t1 = 1450
-                dt.t2 = 1450
-                dt.t3 = 1450
-                dt.t4 = 1450
+                dt.td1 = 1450
+                dt.td2 = 1450
+                dt.td3 = 1450
+                dt.td4 = 1450
                 print("Moving Up")
                 depthPub.publish(dt)
 
             elif key == 'l':
-                dt.t1 = 1550
-                dt.t2 = 1550
-                dt.t3 = 1550
-                dt.t4 = 1550
+                dt.td1 = 1550
+                dt.td2 = 1550
+                dt.td3 = 1550
+                dt.td4 = 1550
                 print("Moving Down")
                 depthPub.publish(dt)
 
             elif key == 'w':
-                vt.t1 = 1550
-                vt.t2 = 1550
-                vt.t3 = 1550
-                vt.t4 = 1550
+                vt.tfr = 1550
+                vt.tfl = 1550
+                vt.trr = 1550
+                vt.trl = 1550
                 print("Moving forward")
                 vectorPub.publish(vt)
 
             elif key == 'a':
-                vt.t1 = 1550
-                vt.t2 = 1450
-                vt.t3 = 1450
-                vt.t4 = 1550
+                vt.tfr = 1550
+                vt.tfl = 1450
+                vt.trr = 1450
+                vt.trl = 1550
                 print("Moving left")
                 vectorPub.publish(vt)
 
             elif key == 's':
-                vt.t1 = 1450
-                vt.t2 = 1450
-                vt.t3 = 1450
-                vt.t4 = 1450
+                vt.tfr = 1450
+                vt.tfl = 1450
+                vt.trr = 1450
+                vt.trl = 1450
                 print("Moving backward")
                 vectorPub.publish(vt)
 
             elif key == 'd':
-                vt.t1 = 1450
-                vt.t2 = 1550
-                vt.t3 = 1550
-                vt.t4 = 1450
+                vt.tfr = 1450
+                vt.tfl = 1550
+                vt.trr = 1550
+                vt.trl = 1450
                 print("Moving right")
                 vectorPub.publish(vt)
 
             elif key == 'q':
                 print("resetting and quitting")
-                dt.t1 = 1500
-                dt.t2 = 1500
-                dt.t3 = 1500
-                dt.t4 = 1500
-                vt.t1 = 1500
-                vt.t2 = 1500
-                vt.t3 = 1500
-                vt.t4 = 1500
+                dt.td1 = 1500
+                dt.td2 = 1500
+                dt.td3 = 1500
+                dt.td4 = 1500
+                vt.tfr = 1500
+                vt.tfl = 1500
+                vt.trr = 1500
+                vt.trl = 1500
                 break
 
             elif key == 'r':
-                dt.t1 = 1500
-                dt.t2 = 1500
-                dt.t3 = 1500
-                dt.t4 = 1500
-                vt.t1 = 1500
-                vt.t2 = 1500
-                vt.t3 = 1500
-                vt.t4 = 1500
+                dt.td1 = 1500
+                dt.td2 = 1500
+                dt.td3 = 1500
+                dt.td4 = 1500
+                vt.tfr = 1500
+                vt.tfl = 1500
+                vt.trr = 1500
+                vt.trl = 1500
                 print("resetting vector and depth to 1500")
                 vectorPub.publish(vt)
                 depthPub.publish(dt)
 
             elif key == 'm':
-		vt.t1 = 1450
-		vt.t2 = 1550
-		vt.t3 = 1450
-		vt.t4 = 1550
+		vt.tfr = 1450
+		vt.tfl = 1550
+		vt.trr = 1450
+		vt.trl = 1550
 		print("Yaw Right")
                 vectorPub.publish(vt)
 
             elif key == 'n':
-		vt.t1 = 1550
-		vt.t2 = 1450
-		vt.t3 = 1550
-		vt.t4 = 1450
+		vt.tfr = 1550
+		vt.tfl = 1450
+		vt.trr = 1550
+		vt.trl = 1450
 		print("Yaw Left")
                 vectorPub.publish(vt)
 
@@ -166,73 +167,16 @@ if __name__=="__main__":
         dt = ThrusterMsg()
         vt = ThrusterMsg()
 
-        dt.t1 = 1500
-        dt.t2 = 1500
-        dt.t3 = 1500
-        dt.t4 = 1500
+        dt.td1 = 1500
+        dt.td2 = 1500
+        dt.td3 = 1500
+        dt.td4 = 1500
 
-        vt.t1 = 1500
-        vt.t2 = 1500
-        vt.t3 = 1500
-        vt.t4 = 1500
+        vt.tfr = 1500
+        vt.tfl = 1500
+        vt.trr = 1500
+        vt.trl = 1500
 
         depthPub.publish(dt)
         vectorPub.publish(vt)
         termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
-
-
-
-
-
-'''
-# -*- coding: utf-8 -*-
-from __future__ import absolute_import, division, unicode_literals, print_function
-
-import tty, termios
-import sys
-if sys.version_info.major < 3:
-    import thread as _thread
-else:
-    import _thread
-import time
-
-
-try:
-    from msvcrt import getch  # try to import Windows version
-except ImportError:
-    def getch():   # define non-Windows version
-        fd = sys.stdin.fileno()
-        old_settings = termios.tcgetattr(fd)
-        try:
-            tty.setraw(sys.stdin.fileno())
-            ch = sys.stdin.read(1)
-        finally:
-            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
-        return ch
-
-def keypress():
-    global char
-    char = getch()
-
-def main():
-    global char
-    char = None
-    _thread.start_new_thread(keypress, ())
-
-    while True:
-        if char is not None:
-            try:
-                print("Key pressed is " + char.decode('utf-8'))
-            except UnicodeDecodeError:
-                print("character can not be decoded, sorry!")
-                char = None
-            _thread.start_new_thread(keypress, ())
-            if char == 'q' or char == '\x1b':  # x1b is ESC
-                exit()
-            char = None
-        print("Program is running")
-        time.sleep(1)
-
-if __name__ == "__main__":
-    main()
-'''
