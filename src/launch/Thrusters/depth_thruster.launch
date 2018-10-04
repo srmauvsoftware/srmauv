@@ -1,0 +1,5 @@
+<launch>
+
+<node name="depthThrusters" pkg="thrusters" type="depththruster.py" ns="depth_thruster" output="screen"></node>
+
+</launch>

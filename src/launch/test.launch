@@ -1,0 +1,4 @@
+<launch>
+<include file="$(find launch)/Thrusters/thrusters.launch"/>
+<include file="$(find launch)/Controller/controllers.launch"/>
+</launch>

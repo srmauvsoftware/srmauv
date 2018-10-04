@@ -1,0 +1,5 @@
+<launch>
+
+<node name="vectorThrusters" pkg="thrusters" type="vectorthruster.py" ns="vector_thruster" output="screen"></node>
+
+</launch>

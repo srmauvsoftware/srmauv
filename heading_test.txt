@@ -1,0 +1,9 @@
+1. Start ROSCORE
+2. Start thruster node
+3. Start rosserial
+4. Start heading_controller
+5. Start heading_server
+6. Start heading_client
+
+Notes:
+In a launch file a actionlib server and a pid controller package node cannot be launched together. We need to make seperate launch files.

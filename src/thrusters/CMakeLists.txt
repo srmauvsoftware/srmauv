@@ -51,7 +51,8 @@ find_package(catkin REQUIRED COMPONENTS
 ## Generate messages in the 'msg' folder
  add_message_files(
    FILES
-   ThrusterMsg.msg
+   DepthThrusterMsg.msg
+   VectorThrusterMsg.msg
  )
 
 ## Generate services in the 'srv' folder
@@ -90,7 +91,8 @@ find_package(catkin REQUIRED COMPONENTS
 
 ## Generate dynamic reconfigure parameters in the 'cfg' folder
 generate_dynamic_reconfigure_options(
-  cfg/ThrusterCfg.cfg
+  cfg/DepthThrusterCfg.cfg
+  cfg/VectorThrusterCfg.cfg
 )
 
 ###################################

@@ -1,0 +1,6 @@
+1. Start ROSCORE
+2. Start depth thruster node
+3. Start vector thruster node
+4. Start rosserial
+5. Start teleop.py node
+
