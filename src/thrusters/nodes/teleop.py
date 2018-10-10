@@ -84,10 +84,10 @@ if __name__=="__main__":
                 depthPub.publish(dt)
 
             elif key == 'w':
-                vt.tfr = 1550
-                vt.tfl = 1550
-                vt.trr = 1550
-                vt.trl = 1550
+                vt.tfr = 1900
+                vt.tfl = 1900
+                vt.trr = 1900
+                vt.trl = 1900
                 print("Moving forward")
                 vectorPub.publish(vt)
 

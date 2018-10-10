@@ -3,6 +3,7 @@ import rospy
 import actionlib
 import actions.msg
 from std_msgs.msg import Float64
+from geometry_msgs.msg import Pose2D
 
 class headingAction(object):
     _feedback = actions.msg.headingFeedback()
@@ -10,7 +11,7 @@ class headingAction(object):
 
     def __init__(self, name):
         self.pub = rospy.Publisher('/heading_setpoint', Float64, queue_size=10)
-        rospy.Subscriber("/imu/HeadingTrue_degree/theta", Float64, self.heading_cb)
+        rospy.Subscriber("/imu/HeadingTrue_degree", Pose2D, self.heading_cb)
         self._ha = name
         self._hs = actionlib.SimpleActionServer(
             self._ha, \
@@ -21,9 +22,9 @@ class headingAction(object):
 
     def heading_cb(self, data):
         if(data < 0):
-            self.heading_value = 360 + data.data
+            self.heading_value = 360 + data.theta
         else:
-            self.heading_value = data.data
+            self.heading_value = data.theta
 
     def headingCallback(self, goal):
         r = rospy.Rate(10)

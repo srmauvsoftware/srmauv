@@ -15,9 +15,9 @@ class VectorThruster:
     def thrusterCb(self, data):
         msg = VectorThrusterMsg()
         msg.tfr = 1500 + data.data
-        msg.tfl = 1500 + data.data
+        msg.tfl = 1500 - data.data
         msg.trr = 1500 + data.data
-        msg.trl = 1500 + data.data
+        msg.trl = 1500 - data.data
         self.thrusterPub.publish(msg)
 
     def dynamicThrusterCb(self, config, level):
