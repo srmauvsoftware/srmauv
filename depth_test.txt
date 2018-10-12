@@ -1,9 +1,9 @@
 1. Start ROSCORE
 2. Start thruster node
 3. Start rosserial
-4. Start heading_controller
-5. Start heading_server
-6. Start heading_client
+4. Start depth_controller
+5. Start depth_server
+6. Start depth_client
 7. Start PCA9685Jetson Node
 
 Notes:

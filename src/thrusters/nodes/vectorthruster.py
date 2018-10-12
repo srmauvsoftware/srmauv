@@ -33,6 +33,12 @@ if __name__ == '__main__':
     try:
         rospy.init_node('vector_thruster', anonymous=True)
         thruster = VectorThruster()
+	msg = VectorThrusterMsg()
+        msg.tfr = 1500
+        msg.tfl = 1500
+        msg.trr = 1500
+        msg.trl = 1500
+        thruster.thrusterPub.publish(msg)
         rospy.spin()
 
     except rospy.ROSInterruptException: pass

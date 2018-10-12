@@ -33,6 +33,12 @@ if __name__ == '__main__':
     try:
         rospy.init_node('depth_thruster', anonymous=True)
         thruster = DepthThruster()
+	msg = DepthThrusterMsg()
+        msg.td1 = 1500
+        msg.td2 = 1500
+        msg.td3 = 1500
+        msg.td4 = 1500
+	thruster.thrusterPub.publish(msg)
         rospy.spin()
 
     except rospy.ROSInterruptException: pass
