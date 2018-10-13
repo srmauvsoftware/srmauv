@@ -23,7 +23,7 @@ public:
 };
 Controller::Controller()
 {
-  PCA9685 *pca9685 = new PCA9685(0x70);
+  *pca9685 = new PCA9685(0x70);
   int err = pca9685->openPCA9685();
   if(err < 0){
     ROS_INFO("Error: %d", pca9685->error);
@@ -35,13 +35,13 @@ Controller::Controller()
     pca9685->setPWMFrequency(50) ;
 
     pca9685->setPWM(8, 0, 290);
-  pca9685->setPWM(14, 0, 290);
-  pca9685->setPWM(6, 0, 290);
-  pca9685->setPWM(0, 0, 290);
-pca9685->setPWM(2, 0, 290);
-  pca9685->setPWM(4, 0, 290);
-  pca9685->setPWM(10, 0, 290);
-  pca9685->setPWM(12, 0, 290);
+    pca9685->setPWM(14, 0, 290);
+    pca9685->setPWM(6, 0, 290);
+    pca9685->setPWM(0, 0, 290);
+    pca9685->setPWM(2, 0, 290);
+    pca9685->setPWM(4, 0, 290);
+    pca9685->setPWM(10, 0, 290);
+    pca9685->setPWM(12, 0, 290);
   }
 }
 void Controller::depthThrusterCallback(const thrusters::DepthThrusterMsg::ConstPtr& msg)
