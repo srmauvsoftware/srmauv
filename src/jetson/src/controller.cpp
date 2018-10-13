@@ -4,24 +4,36 @@
 
 #include <JHPWMPCA9685.h>
 
-PCA9685 pca9685;
+int t1;
+int t2;
+int t3;
+int t4;
+
+int t5;
+int t6;
+int t7;
+int t8;
+
+void depthThrusterCallback(const thrusters::DepthThrusterMsg::ConstPtr& msg);
+void vectorThrusterCallback(const thrusters::VectorThrusterMsg::ConstPtr& msg);
 
 void depthThrusterCallback(const thrusters::DepthThrusterMsg::ConstPtr& msg){
-  pca9685->setPWM(0, 0, msg.td1);
-  pca9685->setPWM(1, 0, msg.td2);
-  pca9685->setPWM(2, 0, msg.td3);
-  pca9685->setPWM(3, 0, msg.td4);
+  ROS_INFO("%d",msg->td1);
+  t1 = msg->td1;
+  t2 = msg->td2;
+  t3 = msg->td3;
+  t4 = msg->td4;
 }
 
-void vectorThrusterCallback(const thrusters::DepthThrusterMsg:;ConstPtr& msg){
-  pca9685->setPWM(4, 0, msg.tfr);
-  pca9685->setPWM(5, 0, msg.tfl);
-  pca9685->setPWM(6, 0, msg.trr);
-  pca9685->setPWM(7, 0, msg.trl);
+void vectorThrusterCallback(const thrusters::VectorThrusterMsg::ConstPtr& msg){
+  t5 = msg->tfr;
+  t6 = msg->tfl;
+  t7 = msg->trl;
+  t8 = msg->trr;
 }
 
 int main(int argc, char **argv){
-  *pca9685 = new PCA9685(0x70);
+  PCA9685 *pca9685 = new PCA9685(0x70);
   int err = pca9685->openPCA9685();
   if (err < 0){
         ROS_INFO("Error: %d", pca9685->error);
@@ -29,11 +41,17 @@ int main(int argc, char **argv){
         ROS_INFO("PCA9685 Device Address: 0x%02X\n",pca9685->kI2CAddress) ;
         pca9685->setAllPWM(0,0) ;
         pca9685->reset() ;
-        pca9685->setPWMFrequency(60) ;
+        pca9685->setPWMFrequency(50) ;
         ros::init(argc, argv, "jetsonPCA9685");
         ros::NodeHandle n;
         ros::Subscriber depthSubscriber = n.subscribe("/depthThruster", 1000, depthThrusterCallback);
         ros::Subscriber vectorSubscriber = n.subscribe("/vectorThruster", 1000, vectorThrusterCallback);
+
+        ros::Rate r(2);
+        while(ros::ok()){
+	pca9685->setPWM(12, 0, t1);
+	}
+
         ros::spin();
   }
 return 0;

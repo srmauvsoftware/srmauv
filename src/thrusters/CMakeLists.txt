@@ -107,7 +107,7 @@ generate_dynamic_reconfigure_options(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES thrusters
-#  CATKIN_DEPENDS message_generation roscpp rospy std_msgs
+  CATKIN_DEPENDS message_generation roscpp rospy std_msgs message_runtime
 #  DEPENDS system_lib
 )
 

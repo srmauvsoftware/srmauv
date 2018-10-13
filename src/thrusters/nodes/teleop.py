@@ -68,10 +68,10 @@ if __name__=="__main__":
             vt = VectorThrusterMsg()
 
             if key == 'o':
-                dt.td1 = 1450
-                dt.td2 = 1450
-                dt.td3 = 1450
-                dt.td4 = 1450
+                dt.td1 = 290
+                dt.td2 = 290
+                dt.td3 = 290
+                dt.td4 = 290
                 print("Moving Up")
                 depthPub.publish(dt)
 
@@ -84,10 +84,10 @@ if __name__=="__main__":
                 depthPub.publish(dt)
 
             elif key == 'w':
-                vt.tfr = 1900
-                vt.tfl = 1900
-                vt.trr = 1900
-                vt.trl = 1900
+                vt.tfr = 1600
+                vt.tfl = 1600
+                vt.trr = 1600
+                vt.trl = 1600
                 print("Moving forward")
                 vectorPub.publish(vt)
 
@@ -167,15 +167,15 @@ if __name__=="__main__":
         dt = ThrusterMsg()
         vt = ThrusterMsg()
 
-        dt.td1 = 1500
-        dt.td2 = 1500
-        dt.td3 = 1500
-        dt.td4 = 1500
+        dt.td1 = 290
+        dt.td2 = 290
+        dt.td3 = 290
+        dt.td4 = 290
 
-        vt.tfr = 1500
-        vt.tfl = 1500
-        vt.trr = 1500
-        vt.trl = 1500
+        vt.tfr = 290
+        vt.tfl = 290
+        vt.trr = 290
+        vt.trl = 290
 
         depthPub.publish(dt)
         vectorPub.publish(vt)
