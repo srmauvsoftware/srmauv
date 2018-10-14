@@ -68,91 +68,91 @@ if __name__=="__main__":
             vt = VectorThrusterMsg()
 
             if key == 'o':
-                dt.td1 = 290
-                dt.td2 = 290
-                dt.td3 = 290
-                dt.td4 = 290
+                dt.td1 = 289
+                dt.td2 = 289
+                dt.td3 = 289
+                dt.td4 = 289
                 print("Moving Up")
                 depthPub.publish(dt)
 
             elif key == 'l':
-                dt.td1 = 1550
-                dt.td2 = 1550
-                dt.td3 = 1550
-                dt.td4 = 1550
+                dt.td1 = 291
+                dt.td2 = 291
+                dt.td3 = 291
+                dt.td4 = 291
                 print("Moving Down")
                 depthPub.publish(dt)
 
             elif key == 'w':
-                vt.tfr = 1600
-                vt.tfl = 1600
-                vt.trr = 1600
-                vt.trl = 1600
+                vt.tfr = 291
+                vt.tfl = 291
+                vt.trr = 291
+                vt.trl = 291
                 print("Moving forward")
                 vectorPub.publish(vt)
 
             elif key == 'a':
-                vt.tfr = 1550
-                vt.tfl = 1450
-                vt.trr = 1450
-                vt.trl = 1550
+                vt.tfr = 291
+                vt.tfl = 289
+                vt.trr = 289
+                vt.trl = 291
                 print("Moving left")
                 vectorPub.publish(vt)
 
             elif key == 's':
-                vt.tfr = 1450
-                vt.tfl = 1450
-                vt.trr = 1450
-                vt.trl = 1450
+                vt.tfr = 289
+                vt.tfl = 289
+                vt.trr = 289
+                vt.trl = 289
                 print("Moving backward")
                 vectorPub.publish(vt)
 
             elif key == 'd':
-                vt.tfr = 1450
-                vt.tfl = 1550
-                vt.trr = 1550
-                vt.trl = 1450
+                vt.tfr = 289
+                vt.tfl = 291
+                vt.trr = 291
+                vt.trl = 289
                 print("Moving right")
                 vectorPub.publish(vt)
 
             elif key == 'q':
                 print("resetting and quitting")
-                dt.td1 = 1500
-                dt.td2 = 1500
-                dt.td3 = 1500
-                dt.td4 = 1500
-                vt.tfr = 1500
-                vt.tfl = 1500
-                vt.trr = 1500
-                vt.trl = 1500
+                dt.td1 = 290
+                dt.td2 = 290
+                dt.td3 = 290
+                dt.td4 = 290
+                vt.tfr = 290
+                vt.tfl = 290
+                vt.trr = 290
+                vt.trl = 290
                 break
 
             elif key == 'r':
-                dt.td1 = 1500
-                dt.td2 = 1500
-                dt.td3 = 1500
-                dt.td4 = 1500
-                vt.tfr = 1500
-                vt.tfl = 1500
-                vt.trr = 1500
-                vt.trl = 1500
+                dt.td1 = 290
+                dt.td2 = 290
+                dt.td3 = 290
+                dt.td4 = 290
+                vt.tfr = 290
+                vt.tfl = 290
+                vt.trr = 290
+                vt.trl = 290
                 print("resetting vector and depth to 1500")
                 vectorPub.publish(vt)
                 depthPub.publish(dt)
 
             elif key == 'm':
-		vt.tfr = 1450
-		vt.tfl = 1550
-		vt.trr = 1450
-		vt.trl = 1550
+		vt.tfr = 289
+		vt.tfl = 289
+		vt.trr = 289
+		vt.trl = 289
 		print("Yaw Right")
                 vectorPub.publish(vt)
 
             elif key == 'n':
-		vt.tfr = 1550
-		vt.tfl = 1450
-		vt.trr = 1550
-		vt.trl = 1450
+		vt.tfr = 291
+		vt.tfl = 289
+		vt.trr = 291
+		vt.trl = 289
 		print("Yaw Left")
                 vectorPub.publish(vt)
 

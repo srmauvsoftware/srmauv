@@ -50,6 +50,8 @@ void PCA9685::reset () {
 void PCA9685::setPWMFrequency ( float frequency ) {
     printf("Setting PCA9685 PWM frequency to %f Hz\n",frequency) ;
     float rangedFrequency = fmin(fmax(frequency,40),1000) ;
+    rangedFrequency *= 0.9 ;   // Correct for overshoot on PCA9685; The method
+                               // described in the datasheet overshoots by 1/0.9
     int prescale = (int)(25000000.0f / (4096 * rangedFrequency) - 0.5f) ;
     // For debugging
     // printf("PCA9685 Prescale: 0x%02X\n",prescale) ;
