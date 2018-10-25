@@ -32,7 +32,7 @@ def main():
         # depthHeadingTask.addDepthHeading(sm)
  
 
-        sis = IntrospectionServer('ALPHEUS_MISSION_PLANNER', sm, '/START_ALPHEUS')
+        sis = IntrospectionServer('ZARNA_MISSION_PLANNER', sm, '/START_ZARNA')
         # start introspection server by - rosrun smach_viewer smach_viewer.py
         sis.start()
         outcome = sm.execute()

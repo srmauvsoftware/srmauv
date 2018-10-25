@@ -11,3 +11,5 @@ if actual run ->
 if testing ->
 
 4) depthTest.py
+
+5) Regardless, thrusters/depthThruster.py
