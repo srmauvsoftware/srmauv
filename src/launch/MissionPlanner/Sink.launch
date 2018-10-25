@@ -1,0 +1,8 @@
+<launch>
+
+<node pkg="mission_planner" type="mission_planner.py" name="missionPlanner" output="screen" launch-prefix="xterm -e"/>
+<include file="$(find launch)/Controller/depth_controller.launch"/>
+<node pkg="actions" type="depthServer.py" name="depthServer" output="screen" launch-prefix="xterm -e"/>
+<node pkg="thrusters" type="depththruster.py" name="depthThruster" output="screen" launch-prefix="xterm -e"/>
+ <!-- + ros serial arduino -->
+</launch>
