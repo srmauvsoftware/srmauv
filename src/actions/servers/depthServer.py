@@ -49,6 +49,6 @@ class depthAction(object):
             self._ds.set_succeeded(self._result)
 
 if __name__ == '__main__':
-    rospy.init_node('depth_server')
+    rospy.init_node('depthServer')
     server = depthAction(rospy.get_name())
     rospy.spin()

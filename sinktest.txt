@@ -1,0 +1,13 @@
+Things that need to run together to achieve this:
+
+1) Missionplanner.py
+2) Depth Server
+3) Depth controller.launch
+
+if actual run -> 
+
+4) Rosserial + Arduino code for depth to be uploaded
+
+if testing ->
+
+4) depthTest.py

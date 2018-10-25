@@ -1,4 +1,8 @@
 #!/usr/bin/env python
+'''
+This file is responsible for publishing thruster values for each thruster.
+'''
+
 import rospy
 from std_msgs.msg import Float64
 from thrusters.msg import DepthThrusterMsg
