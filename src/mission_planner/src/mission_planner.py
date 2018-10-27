@@ -8,7 +8,7 @@ import smach
 import time
 from smach_ros import IntrospectionServer
 from Sink import Sink
-# from Depth import Depth
+from Depth import Depth
 # from Heading import Heading
 # from DepthHeading import DepthHeading
 
@@ -17,13 +17,19 @@ def main():
     sm = smach.StateMachine(outcomes=['mission_complete', 'mission_failed', 'aborted'])
 
     with sm:
-        # 15 is the inital pressure that acts as the setpoint
-        Sink(sm, 15, 'mission_complete')
-        # Sink(sm, 5, 'DEPTH')
+        # create child state machine
+        sm_sub = smach.StateMachine(outcomes=['depth_success', 'aborted'])
+        smach.StateMachine.add('Sink', sm_sub,
+                               transitions={'depth_success':'mission_complete'})
+        # adding child state 'depth' to sink (sub) state container 
+        with sm_sub:
+            depthTask = Depth(100, 'depth_success')
+            depthTask.addDepthAction(sm)
+        
+        # Sink(sm_sub, 15, 'mission_complete')
+        
 	
 	#state detectGate()
-        # depthTask = Depth(100, 'HEADING')
-        # depthTask.addDepthAction(sm)
 
         # headingTask = Heading(200, 'DEPTH+HEADING')
         # headingTask.addHeadingAction(sm)
