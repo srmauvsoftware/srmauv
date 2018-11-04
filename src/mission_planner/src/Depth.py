@@ -1,15 +1,9 @@
 #! /usr/bin/env python
-import roslib; roslib.load_manifest('mission_planner')
 import rospy
 from smach import StateMachine
 from actions.msg import depthGoal, depthAction
-import actions.msg
-from rospy.exceptions import ROSInitException
-from rospy.timer import Rate
 import smach
-import actionlib
 from smach_ros import SimpleActionState
-import time
 
 class Depth(smach.State):
     def __init__(self, PRESSURE, TASK):
@@ -42,3 +36,20 @@ class Depth(smach.State):
         depthOrder = depthGoal()
         depthOrder.depth_setpoint = self.PRESSURE
         return depthOrder
+
+    def execute(self, ud):
+        rospy.loginfo("Executing State Concurrent Depth")
+        client = actionlib.SimpleActionClient('depthServer',\
+                                            actions.msg.depthAction)
+        client.wait_for_server()
+        goal = actions.msg.depthGoal(depth_setpoint=self.PRESSURE)
+        client.send_goal(goal)
+        client.wait_for_result()
+        result = client.get_state()
+        if result == -1:
+            return 'DepthReached'
+        elif result == 'preempted':
+            return 'aborted'
+        elif result == 'aborted':
+            return 'aborted'
+        else: return 'aborted'

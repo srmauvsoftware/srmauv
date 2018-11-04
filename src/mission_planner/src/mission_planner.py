@@ -1,32 +1,20 @@
 #! /usr/bin/env python
-import roslib; roslib.load_manifest('mission_planner')
 import rospy
 from smach import StateMachine
-from rospy.exceptions import ROSInitException
-from rospy.timer import Rate
 import smach
-import time
 from smach_ros import IntrospectionServer
 from Sink import Sink
-from Depth import Depth
-# from Heading import Heading
-# from DepthHeading import DepthHeading
+from ImageTask import ImageTask
+from darknet_ros.msg import BoundingBox
 
 def main():
     rospy.init_node('mission_planner')
     sm = smach.StateMachine(outcomes=['mission_complete', 'mission_failed', 'aborted'])
 
     with sm:
-        # create child state machine
-        sm_sub = smach.StateMachine(outcomes=['depth_success', 'aborted'])
-        smach.StateMachine.add('Sink', sm_sub,
-                               transitions={'depth_success':'mission_complete'})
-        # adding child state 'depth' to sink (sub) state container 
-        with sm_sub:
-            depthTask = Depth(100, 'depth_success')
-            depthTask.addDepthAction(sm)
+        Sink(sm, 15, 'IMAGETASK')
+        ImageTask(sm, 'mission_complete')
         
-        # Sink(sm_sub, 15, 'mission_complete')
         
 	
 	#state detectGate()
