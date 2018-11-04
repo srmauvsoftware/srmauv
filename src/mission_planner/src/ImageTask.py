@@ -2,8 +2,9 @@
 import rospy
 import smach
 
-from Depth import Depth 
+from Depth import Depth
 from Heading import Heading
+from darknet_ros_msgs.msg import BoundingBox
 
 camera_centre_x = 320
 camera_centre_y = 240
@@ -15,6 +16,8 @@ kh = 1.5
 class ImageTask():
     def __init__(self, smach_StateMachine, TASK):
         self.TASK = TASK
+        self.mapped_depth = 0
+        self.mapped_heading = 0
         rospy.Subscriber('/BoundingBox', BoundingBox, self.callback)
         sm_sub = smach.Concurrence(outcomes = ['DepthHeadingReached', 'DepthHeadingFailed'],
                                                 default_outcome='DepthHeadingFailed',
@@ -23,12 +26,12 @@ class ImageTask():
                                                 'HEADING_CONCURRENT':'HeadingReached'}})
 
         with sm_sub:
-            smach.Concurrence.add('DEPTH_CONCURRENT', Depth(mapped_depth))
-            smach.Concurrence.add('HEADING_CONCURRENT', Heading(mapped_heading))
+            smach.Concurrence.add('DEPTH_CONCURRENT', Depth(self.mapped_depth, 'depth_success'))
+            smach.Concurrence.add('HEADING_CONCURRENT', Heading(self.mapped_heading, 'heading_success'))
         
         smach.StateMachine.add('IMAGETASK', sm_sub, transitions={
-          DepthHeadingFailed: 'IMAGETASK',
-          DepthHeadingSuccess: self.TASK
+          'DepthHeadingFailed': 'IMAGETASK',
+          'DepthHeadingReached': self.TASK
         })
 
     def callback(data):
