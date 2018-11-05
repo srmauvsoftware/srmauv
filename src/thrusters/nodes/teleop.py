@@ -28,7 +28,7 @@ tfl--F--tfr
  |       |
 trl-----trr
 
-Alpheus Testing Mode - Reading From Keyboard
+Zarna Testing Mode - Reading From Keyboard
 --------------------
 w - forward
 a - left
@@ -136,7 +136,7 @@ if __name__=="__main__":
                 vt.tfl = 290
                 vt.trr = 290
                 vt.trl = 290
-                print("resetting vector and depth to 1500")
+                print("resetting vector and depth to 290")
                 vectorPub.publish(vt)
                 depthPub.publish(dt)
 

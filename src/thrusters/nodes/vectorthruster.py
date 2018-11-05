@@ -14,10 +14,10 @@ class VectorThruster:
 
     def thrusterCb(self, data):
         msg = VectorThrusterMsg()
-        msg.tfr = 1500 + data.data
-        msg.tfl = 1500 - data.data
-        msg.trr = 1500 + data.data
-        msg.trl = 1500 - data.data
+        msg.tfr = 290 + data.data
+        msg.tfl = 290 - data.data
+        msg.trr = 290 + data.data
+        msg.trl = 290 - data.data
         self.thrusterPub.publish(msg)
 
     def dynamicThrusterCb(self, config, level):
@@ -34,10 +34,10 @@ if __name__ == '__main__':
         rospy.init_node('vector_thruster', anonymous=True)
         thruster = VectorThruster()
 	msg = VectorThrusterMsg()
-        msg.tfr = 1500
-        msg.tfl = 1500
-        msg.trr = 1500
-        msg.trl = 1500
+        msg.tfr = 290
+        msg.tfl = 290
+        msg.trr = 290
+        msg.trl = 290
         thruster.thrusterPub.publish(msg)
         rospy.spin()
 

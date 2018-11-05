@@ -18,10 +18,10 @@ class DepthThruster:
 
     def thrusterCb(self, data):
         msg = DepthThrusterMsg()
-        msg.td1 = 1500 + data.data
-        msg.td2 = 1500 + data.data
-        msg.td3 = 1500 + data.data
-        msg.td4 = 1500 + data.data
+        msg.td1 = 290 + data.data
+        msg.td2 = 290 + data.data
+        msg.td3 = 290 + data.data
+        msg.td4 = 290 + data.data
         self.thrusterPub.publish(msg)
 
     def dynamicThrusterCb(self, config, level):
@@ -38,10 +38,10 @@ if __name__ == '__main__':
         rospy.init_node('depth_thruster', anonymous=True)
         thruster = DepthThruster()
 	msg = DepthThrusterMsg()
-        msg.td1 = 1500
-        msg.td2 = 1500
-        msg.td3 = 1500
-        msg.td4 = 1500
+        msg.td1 = 290
+        msg.td2 = 290
+        msg.td3 = 290
+        msg.td4 = 290
 	thruster.thrusterPub.publish(msg)
         rospy.spin()
 
