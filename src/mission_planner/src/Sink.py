@@ -14,7 +14,7 @@ class Sink:
             depthTask = Depth(INITIAL_PRESSURE, 'depth_success')
             depthTask.addDepthAction(smach_StateMachine)
         smach.StateMachine.add('Sink', sm_sub,
-                               transitions={'depth_success':'IMAGETASK'})
+                               transitions={'depth_success':'mission_complete'})
         
 
     def sink_callback(self, userdata, goal):

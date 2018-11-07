@@ -2,6 +2,7 @@
 
 import rospy
 import actionlib
+import time
 import actions.msg
 from std_msgs.msg import Float64
 
@@ -26,8 +27,21 @@ class depthAction(object):
     def depthCallback(self, goal):
         r = rospy.Rate(10)
         success = True
+	successt = False
         new_depth = goal.depth_setpoint
         while(goal.depth_setpoint != self._depth):
+            if (abs(goal.depth_setpoint - self._depth) < 1):
+                temp = self._depth
+                start = int(time.time())
+                while (temp == self._depth):
+		    if (int(time.time())!=start+10):
+			#rospy.loginfo("We are close")
+                        continue
+		    else:
+		        successt=True
+			break
+	    if (successt): 
+		break
             self.pub.publish(new_depth)
             if self._ds.is_preempt_requested():
                 rospy.loginfo('%s : Preempted' % self._da)
@@ -37,10 +51,10 @@ class depthAction(object):
             self._feedback.depth_error = self._depth
             self._ds.publish_feedback(self._feedback)
             self._feedback.depth_error = self._depth - goal.depth_setpoint
-            rospy.loginfo('%s : Going to Depth %f with Error : %f',\
-                self._da , \
-                goal.depth_setpoint, \
-                self._feedback.depth_error)
+            #rospy.loginfo('%s : Going to Depth %f with Error : %f',\
+                #self._da , \
+                #goal.depth_setpoint, \
+                #self._feedback.depth_error)
             r.sleep()
 
         if success:
@@ -52,3 +66,4 @@ if __name__ == '__main__':
     rospy.init_node('depthServer')
     server = depthAction(rospy.get_name())
     rospy.spin()
+

@@ -12,8 +12,8 @@ def main():
     sm = smach.StateMachine(outcomes=['mission_complete', 'mission_failed', 'aborted'])
 
     with sm:
-        Sink(sm, 15, 'IMAGETASK')
-        ImageTask(sm, 'mission_complete') 
+        Sink(sm, 5, 'mission_complete')
+        #ImageTask(sm, 'mission_complete') 
 
         sis = IntrospectionServer('ZARNA_MISSION_PLANNER', sm, '/START_ZARNA')
         # start introspection server by - rosrun smach_viewer smach_viewer.py
