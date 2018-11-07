@@ -1,0 +1,8 @@
+#goal definition
+int16 time_setpoint
+---
+#result definition
+int16 time_final
+---
+#feedback
+int16 time_error

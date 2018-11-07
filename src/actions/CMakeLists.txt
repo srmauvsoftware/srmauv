@@ -65,6 +65,7 @@ find_package(catkin REQUIRED COMPONENTS
    FILES
    depth.action
    heading.action
+   time.action
  )
 
 ## Generate added messages and services with any dependencies listed here
