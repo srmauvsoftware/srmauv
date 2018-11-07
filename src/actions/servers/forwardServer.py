@@ -12,7 +12,6 @@ class forwardAction(object):
 
     def __init__(self, name):
         self._da = name
-        self.currentTime = int(time.time())
         self.setpoint_pub = rospy.Publisher('/time_setpoint', Float64, queue_size=10)
         self.state_pub = rospy.Publisher('/time', Float64, queue_size=10)
         self._ds = actionlib.SimpleActionServer(
@@ -23,9 +22,10 @@ class forwardAction(object):
         self._ds.start()
 
     def timeCallback(self, goal):
+	self.currentTime = int(time.time())
         r = rospy.Rate(10)
         time_setpoint = goal.time_setpoint
-        epoch_setpoint = self.currentTime + goal.time_setpoint
+        epoch_setpoint = self.currentTime + time_setpoint
         
         while (int(time.time()) != epoch_setpoint):
             self.setpoint_pub.publish(Float64(time_setpoint))

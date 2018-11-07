@@ -13,7 +13,7 @@ def main():
 
     with sm:
 
-        # Sink(sm, 15, 'FORWARD')
+        Sink(sm, 5, 'FORWARD')
         Forward(sm, 25, 'mission_complete')
         # ImageTask(sm, 'mission_complete') 
 
