@@ -5,6 +5,7 @@ import smach
 from smach_ros import IntrospectionServer
 from Sink import Sink
 from Forward import Forward
+from PathAlign import PathAlign
 # from ImageTask import ImageTask
 
 def main():
@@ -13,7 +14,8 @@ def main():
 
     with sm:
         # Sink(sm, 15, 'FORWARD')
-        Forward(sm, 25, 'mission_complete')
+        Forward(sm, 25, 'Heading')
+        PathAlign(sm, 'mission_complete')
         # ImageTask(sm, 'mission_complete') 
 
         sis = IntrospectionServer('ZARNA_MISSION_PLANNER', sm, '/START_ZARNA')
