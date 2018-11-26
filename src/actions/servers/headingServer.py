@@ -4,6 +4,7 @@ import actionlib
 import actions.msg
 from std_msgs.msg import Float64
 from geometry_msgs.msg import Pose2D
+import math
 
 class headingAction(object):
     _feedback = actions.msg.headingFeedback()
@@ -30,7 +31,7 @@ class headingAction(object):
         r = rospy.Rate(10)
         success = True
         new_heading = goal.heading_setpoint
-        while(goal.heading_setpoint != self.heading_value):
+        while(goal.heading_setpoint != math.floor(self.heading_value)):
             self.pub.publish(new_heading)
             if self._hs.is_preempt_requested():
                 rospy.loginfo('%s : Preempted' % self._ha)

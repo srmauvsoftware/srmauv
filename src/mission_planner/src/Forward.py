@@ -19,7 +19,6 @@ class Forward:
             'aborted': 'aborted'
           })
 
-
     def goal_callback(self, userdata, goal):
         rospy.loginfo("Executing State Forward")
         timeOrder = actions.msg.timeGoal()

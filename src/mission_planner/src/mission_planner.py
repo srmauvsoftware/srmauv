@@ -3,7 +3,7 @@ import rospy
 from smach import StateMachine
 import smach
 from smach_ros import IntrospectionServer
-from Sink import Sink
+# from Sink import Sink
 from Forward import Forward
 from PathAlign import PathAlign
 # from ImageTask import ImageTask
@@ -14,9 +14,9 @@ def main():
 
     with sm:
         # Sink(sm, 15, 'FORWARD')
-        Forward(sm, 25, 'Heading')
-        PathAlign(sm, 'mission_complete')
-        # ImageTask(sm, 'mission_complete') 
+        Forward(sm, 5, 'mission_complete')
+        #PathAlign(sm, 'mission_complete')
+        # ImageTask(sm, 'mission_complete')
 
         sis = IntrospectionServer('ZARNA_MISSION_PLANNER', sm, '/START_ZARNA')
         # start introspection server by - rosrun smach_viewer smach_viewer.py

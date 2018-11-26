@@ -31,7 +31,8 @@ class VectorThruster:
 
 if __name__ == '__main__':
     try:
-        rospy.init_node('vector_thruster', anonymous=True)
+
+        rospy.init_node('vectorThuster', anonymous=True)
         thruster = VectorThruster()
 	msg = VectorThrusterMsg()
         msg.tfr = 290

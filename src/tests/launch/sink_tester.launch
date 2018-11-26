@@ -1,0 +1,9 @@
+<launch>
+
+<!--include file="$(find launch)/Controller/forward_controller.launch"/-->
+<node pkg="thrusters" type="vectorThruster.py" name="vectorThruster" output="screen"/>
+<node pkg="actions" type="forwardServer.py" name="forwardServer" output="screen" launch-prefix="xterm -e"/>
+<node pkg="mission_planner" type="mission_planner.py" name="missionPlanner" output="screen"/>
+<!--node pkg="smach_viewer" type="smach_viewer.py" name="smachViewer" output="screen"/-->
+
+</launch>
