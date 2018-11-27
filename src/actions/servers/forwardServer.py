@@ -43,7 +43,6 @@ class forwardAction(object):
 
         # if success:
         self._result.time_final = self._feedback.time_error
-        self.state_pub.publish(Float64(time_setpoint))
         rospy.loginfo('%s : Success' % self._da)
         self._ds.set_succeeded(self._result)
 

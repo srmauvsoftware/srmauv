@@ -5,10 +5,10 @@ import actionlib
 import actions.msg
 
 def headingClient():
-    client = actionlib.SimpleActionClient('heading_server', \
+    client = actionlib.SimpleActionClient('headingServer', \
     actions.msg.headingAction)
     client.wait_for_server()
-    goal = actions.msg.headingGoal(heading_setpoint=100)
+    goal = actions.msg.headingGoal(heading_setpoint=150)
     client.send_goal(goal)
     rospy.loginfo("Heading Client Goal Sent")
     client.wait_for_result()

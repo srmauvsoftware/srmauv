@@ -7,14 +7,19 @@ from smach_ros import IntrospectionServer
 from Forward import Forward
 from PathAlign import PathAlign
 # from ImageTask import ImageTask
+from Head import Head
+
 
 def main():
     rospy.init_node('mission_planner')
     sm = smach.StateMachine(outcomes=['mission_complete', 'mission_failed', 'aborted'])
 
     with sm:
+        #Forward(sm, 15, 'mission_complete')
         # Sink(sm, 15, 'FORWARD')
-        Forward(sm, 5, 'mission_complete')
+        Head(sm, 5, 'mission_complete')
+
+
         #PathAlign(sm, 'mission_complete')
         # ImageTask(sm, 'mission_complete')
 
