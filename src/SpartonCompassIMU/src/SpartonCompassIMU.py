@@ -81,7 +81,7 @@ if __name__ == '__main__':
     rospy.init_node('SpartonDigitalCompassIMU')
     Pos_pub  = rospy.Publisher('imu/HeadingTrue', Pose2D)
     PosD_pub = rospy.Publisher('imu/HeadingTrue_degree', Pose2D)
-    PosD_pubD = rospy.Publisher('imu/HeadingTrue_degree/theta', Float64)
+    PosD_pubD = rospy.Publisher('imu/Heading_degree/theta', Float64)
     Imu_pub = rospy.Publisher('imu/data', Imu)
     SpartonPose2D=Pose2D()
     SpartonPose2D.x=float(0.0)

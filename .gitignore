@@ -2,3 +2,4 @@
 /devel
 
 .vscode/*.json
+*.pyc

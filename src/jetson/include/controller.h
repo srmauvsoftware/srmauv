@@ -9,6 +9,7 @@
 class Controller {
 	public:
 		Controller();
+		~Controller();
 		PCA9685 *controller;
 
 	private:

@@ -7,3 +7,10 @@
 <!-- node pkg="tests" type="headingClient.py" name="headingClient" output="screen"/-->
 
 </launch>
+
+<!--node name="SpartonCompassIMU" pkg="SpartonCompassIMU" type="SpartonCompassIMU.py"  respawn="true">
+	<param name="port" value="/dev/ttyUSB0" />
+	<param name="baud" value="115200" />
+	<param name="printmodulus" value="1" />
+	<param name="declination" value="-1" />
+</node>-->

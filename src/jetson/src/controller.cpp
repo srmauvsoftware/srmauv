@@ -25,6 +25,10 @@ Controller::Controller(){
 
 }
 
+Controller::~Controller() {
+controller->closePCA9685();
+}
+
 void Controller::depthThrusterCb (const thrusters::DepthThrusterMsg::ConstPtr& msg){
 	controller->setPWM(8, 0, msg->td1);
     	controller->setPWM(14, 0, msg->td2);

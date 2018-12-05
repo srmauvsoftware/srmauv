@@ -1,20 +1,24 @@
 <launch>
 
-<!--node name="heading" pkg="tests" type="heading.py"/-->
-<node name="heading_setpoint" pkg="tests" type="heading_setpoint.py"/>
+
 
 <node name="controller" pkg="pid" type="controller" ns="heading_controller" output="screen" >
       <param name="Kp" value="5.0" />
       <param name="Ki" value="0.0" />
       <param name="Kd" value="0.1" />
-      <param name="upper_limit" value="400" />
-      <param name="lower_limit" value="-400" />
-      <param name="windup_limit" value="400" />
+      <param name="upper_limit" value="168" />
+      <param name="lower_limit" value="-168" />
+      <param name="windup_limit" value="168" />
       <param name="max_loop_frequency" value="100.0" />
       <param name="min_loop_frequency" value="100.0" />
       <remap from="setpoint" to="/heading_setpoint" />
-      <remap from="state" to="/imu/HeadingTrue_degree/theta" />
-      <remap from="control_effort" to="/heading_controller/control_effort" />
-     </node>
+      <remap from="state" to="/imu/Heading_degree/theta" />
+      <remap from="control_effort" to="/vectorThruster/control_effort" />
+</node>
+
+<node pkg="thrusters" type="vectorThruster.py" name="vectorThruster" output="screen" />
+
+<node pkg="actions" type="headingServer.py" name="headingServer" output="screen" />
+
 
 </launch>
