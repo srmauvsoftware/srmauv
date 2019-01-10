@@ -5,7 +5,7 @@ import smach
 from smach_ros import IntrospectionServer
 # from Sink import Sink
 from Forward import Forward
-from PathAlign import PathAlign
+#from PathAlign import PathAlign
 # from ImageTask import ImageTask
 from Head import Head
 
@@ -17,7 +17,7 @@ def main():
     with sm:
         #Forward(sm, 15, 'mission_complete')
         # Sink(sm, 15, 'FORWARD')
-        Head(sm, 5, 'mission_complete')
+        Head(sm, 350, 'mission_complete')
 
 
         #PathAlign(sm, 'mission_complete')

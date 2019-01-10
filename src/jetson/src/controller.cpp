@@ -8,8 +8,7 @@ Controller::Controller(){
 	controller->setAllPWM(0,0) ;
 	controller->reset();
  	controller->setPWMFrequency(50);
-	sleep(1);
-        controller->setPWM(8, 0, 290);sleep(1);	
+	sleep(1);	
     	controller->setPWM(14, 0, 290);sleep(1);
         controller->setPWM(6, 0, 290);sleep(1);
     	controller->setPWM(0, 0, 290);sleep(1);
@@ -30,7 +29,6 @@ controller->closePCA9685();
 }
 
 void Controller::depthThrusterCb (const thrusters::DepthThrusterMsg::ConstPtr& msg){
-	controller->setPWM(8, 0, msg->td1);
     	controller->setPWM(14, 0, msg->td2);
         controller->setPWM(6, 0, msg->td3);
     	controller->setPWM(0, 0, msg->td4);

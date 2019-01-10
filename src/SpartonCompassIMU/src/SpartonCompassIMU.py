@@ -46,6 +46,7 @@
 import roslib; roslib.load_manifest('SpartonCompassIMU')
 import rospy
 from std_msgs.msg import String
+from std_msgs.msg import Float64
 from geometry_msgs.msg import Pose2D
 from std_msgs.msg import Float64
 import serial, string, math, time, calendar
@@ -284,12 +285,13 @@ if __name__ == '__main__':
                                 #SpartonPose2D.x=float(fields[1]) # put mSec tick here for debug the speed
                                 #SpartonPose2D.theta = wrapToPI(math.radians(90.-float(fields[11])-D_Compass_offset))
                                 #SpartonPose2D.theta = wrapToPI(yaw_ros)
-                                SpartonPose2D.theta = wrapToPI(angle_ROS[2])
+                                SpartonPose2D.theta = wrapTo2PI(angle_ROS[2])
 				
                                 #print SpartonPose2D.theta/math.pi *180.
                                 Pos_pub.publish(SpartonPose2D)
                                 SpartonPose2D_D.theta =SpartonPose2D.theta/math.pi *180.
                                 PosD_pub.publish(SpartonPose2D_D)
+				print(SpartonPose2D_D.theta)
                                 PosD_pubD.publish(SpartonPose2D_D.theta)
                                 # reset checksum_error_counter when you have good data
                                 checksum_error_counter=0
