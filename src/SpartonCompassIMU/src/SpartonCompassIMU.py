@@ -285,7 +285,7 @@ if __name__ == '__main__':
                                 #SpartonPose2D.x=float(fields[1]) # put mSec tick here for debug the speed
                                 #SpartonPose2D.theta = wrapToPI(math.radians(90.-float(fields[11])-D_Compass_offset))
                                 #SpartonPose2D.theta = wrapToPI(yaw_ros)
-                                SpartonPose2D.theta = wrapTo2PI(angle_ROS[2])
+                                SpartonPose2D.theta = wrapToPI(angle_ROS[2])
 				
                                 #print SpartonPose2D.theta/math.pi *180.
                                 Pos_pub.publish(SpartonPose2D)
