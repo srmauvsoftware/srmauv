@@ -211,8 +211,8 @@ if __name__=="__main__":
     headingSetpointPub = rospy.Publisher('/heading_setpoint', Float64, queue_size=10)
     headingControllerToggle = rospy.Publisher('/heading_controller/pid_enable', Bool, queue_size=10)
 
-    torpedoPub = rospy.Publisher('/torpedo', Float64, queue_size=10)
-    dropperPub = rospy.Publisher('/dropper', Float64, queue_size=10)
+    torpedoPub = rospy.Publisher('/torpedo', Bool, queue_size=10)
+    dropperPub = rospy.Publisher('/dropper', Bool, queue_size=10)
 
     rospy.Subscriber('/keyboard/keyup', Key, keyUp)
     rospy.Subscriber('/keyboard/keydown', Key, keyDown)
