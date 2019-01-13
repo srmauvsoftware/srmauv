@@ -8,39 +8,48 @@
 ros::NodeHandle(nh);
 SimpleKalmanFilter pressureKF(1, 1, 0.01);
 
-void messageCb( const std_msgs::Bool& msg){
-  Serial.println("ABCD");
+void torpedoCb( const std_msgs::Bool& msg){
+  
   if (msg.data) {
     digitalWrite(4,0);
     digitalWrite(7,0);
-    digitalWrite(8,0);
-    digitalWrite(13,0);
   } else {
     digitalWrite(4,1);
     digitalWrite(7,1);
+  }  
+}
+
+void dropperCb( const std_msgs::Bool& msg){
+  
+  if (msg.data) {
+    digitalWrite(8,0);
+    digitalWrite(13,0);
+  } else {
     digitalWrite(8,1);
     digitalWrite(13,1);
-  }
-
-  
-  //digitalWrite(13, HIGH-digitalRead(13));   // blink the led
-  
+  }  
 }
+
 
 std_msgs::Float64 depth;
 ros::Publisher depth_pub("/depth", &depth);
-ros::Subscriber<std_msgs::Bool> sub("/torpedo", &messageCb );
+ros::Subscriber<std_msgs::Bool> tsub("/torpedo", &torpedoCb );
+ros::Subscriber<std_msgs::Bool> dsub("/dropper", &dropperCb );
 
 void setup(){
   pinMode(13, OUTPUT);
   pinMode(4, OUTPUT);
   pinMode(8,OUTPUT);
-  
   pinMode(7,OUTPUT);
-  delay(1000);
-  Serial.begin(9600);
+  
+  digitalWrite(4,1);
+  digitalWrite(7,1);
+  digitalWrite(8,1);
+  digitalWrite(13,1);
+  
   nh.initNode();
-  nh.subscribe(sub);
+  nh.subscribe(tsub);
+  nh.subscribe(dsub);
   nh.advertise(depth_pub);
 }
  
