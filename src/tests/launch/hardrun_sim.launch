@@ -12,10 +12,9 @@ depth thruster
 <launch>
 <include file="$(find launch)/Controller/depth_controller.launch"/>
 <include file="$(find launch)/Controller/heading_controller.launch"/>
-<node pkg="actions" type="depthServer.py" name="depthServer" output="screen" launch-prefix="xterm -e"/>
-<node pkg="actions" type="headingServer.py" name="headingServer" output="screen" launch-prefix="xterm -e"/>
-<node pkg="thrusters" type="depththruster.py" name="depthThruster" output="screen"/>
-<node pkg="thrusters" type="vectorthruster.py" name="vectorThruster" output="screen"/>
+<!-- <node pkg="actions" type="depthServer.py" name="depthServer" output="screen" launch-prefix="xterm -e"/>
+<node pkg="actions" type="headingServer.py" name="headingServer" output="screen" launch-prefix="xterm -e"/> -->
+<node pkg="thrusters" type="depthThruster.py" name="depthThruster" output="screen"/>
+<node pkg="thrusters" type="vectorThruster.py" name="vectorThruster" output="screen"/>
 <node pkg="thrusters" type="teleop.py" name="teleop" output="screen"/>
-<node pkg="keyboard" type="keyboard.py" name="keyboard" output="screen"/>
 </launch>

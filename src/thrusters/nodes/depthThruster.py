@@ -35,7 +35,7 @@ class DepthThruster:
 
 if __name__ == '__main__':
     try:
-        rospy.init_node('depth_thruster', anonymous=True)
+        rospy.init_node('depthThruster', anonymous=True)
         thruster = DepthThruster()
         msg = DepthThrusterMsg()
         msg.td1 = 290

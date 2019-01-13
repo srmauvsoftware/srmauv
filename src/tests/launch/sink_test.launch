@@ -4,7 +4,7 @@
 <include file="$(find launch)/Controller/depth_controller.launch"/>
 <node name="depth" pkg="tests" type="depth.py"/>
 <node pkg="actions" type="depthServer.py" name="depthServer" output="screen" launch-prefix="xterm -e"/>
-<node pkg="thrusters" type="depththruster.py" name="depthThruster" output="screen"/>
+<node pkg="thrusters" type="depthThruster.py" name="depthThruster" output="screen"/>
 <node pkg="smach_viewer" type="smach_viewer.py" name="smachViewer" output="screen"/>
 
 </launch>

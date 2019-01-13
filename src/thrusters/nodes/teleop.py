@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import roslib
 import rospy
+import time
 
 from thrusters.msg import DepthThrusterMsg
 from thrusters.msg import VectorThrusterMsg
@@ -41,6 +42,8 @@ m - yaw-right
 n - yaw-left
 r - reset
 q - quit
+t - torpedo
+x - dropper
 --------------------
 """ 
 
@@ -141,6 +144,19 @@ def keyDown(data):
         print("Swaying right")
         vectorPub.publish(vt)
 
+    elif key == 't':
+        print ("Firing torpedo")
+        torpedoPub.publish(Bool(True))
+        time.sleep(.500)
+        torpedoPub.publish(Bool(False))
+        
+    
+    elif key == 'x':
+        print ("Actuating dropper")
+        dropperPub.publish(Bool(True))
+        time.sleep(.500)
+        dropperPub.publish(Bool(False))
+
     elif key == 'q':
         print("resetting and quitting")
         dt.td1 = 290
@@ -195,12 +211,15 @@ if __name__=="__main__":
     headingSetpointPub = rospy.Publisher('/heading_setpoint', Float64, queue_size=10)
     headingControllerToggle = rospy.Publisher('/heading_controller/pid_enable', Bool, queue_size=10)
 
+    torpedoPub = rospy.Publisher('/torpedo', Float64, queue_size=10)
+    dropperPub = rospy.Publisher('/dropper', Float64, queue_size=10)
+
     rospy.Subscriber('/keyboard/keyup', Key, keyUp)
     rospy.Subscriber('/keyboard/keydown', Key, keyDown)
 
     rospy.Subscriber('/depth', Float64, getDepth)
     rospy.Subscriber('/imu/HeadingTrue_degree/theta', Float64, getHeading)
-    
+
     rospy.init_node('teleop')
     
     rospy.spin()
