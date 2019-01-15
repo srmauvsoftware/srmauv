@@ -3,7 +3,7 @@ import rospy
 from smach import StateMachine
 import smach
 from smach_ros import IntrospectionServer
-# from Sink import Sink
+from Sink import Sink
 from Forward import Forward
 #from PathAlign import PathAlign
 # from ImageTask import ImageTask
@@ -16,10 +16,9 @@ def main():
 
     with sm:
         #Forward(sm, 15, 'mission_complete')
-        # Sink(sm, 15, 'FORWARD')
-        Head(sm, 350, 'mission_complete')
-
-
+        Sink(sm, 530, 'FORWARD')
+        Head(sm, 90, 'FORWARD')
+	Forward(sm, 15, 'mission_complete')
         #PathAlign(sm, 'mission_complete')
         # ImageTask(sm, 'mission_complete')
 

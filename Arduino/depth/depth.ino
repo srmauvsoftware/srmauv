@@ -23,10 +23,13 @@ void dropperCb( const std_msgs::Bool& msg){
   
   if (msg.data) {
     digitalWrite(8,0);
-    digitalWrite(13,0);
+//    digitalWrite(8,0);
   } else {
     digitalWrite(8,1);
-    digitalWrite(13,1);
+    delay(1000);
+    digitalWrite(9,0);
+    delay(1000);
+    digitalWrite(9,1);
   }  
 }
 
@@ -37,7 +40,7 @@ ros::Subscriber<std_msgs::Bool> tsub("/torpedo", &torpedoCb );
 ros::Subscriber<std_msgs::Bool> dsub("/dropper", &dropperCb );
 
 void setup(){
-  pinMode(13, OUTPUT);
+  pinMode(9, OUTPUT);
   pinMode(4, OUTPUT);
   pinMode(8,OUTPUT);
   pinMode(7,OUTPUT);
@@ -45,7 +48,7 @@ void setup(){
   digitalWrite(4,1);
   digitalWrite(7,1);
   digitalWrite(8,1);
-  digitalWrite(13,1);
+  digitalWrite(9,1);
   
   nh.initNode();
   nh.subscribe(tsub);

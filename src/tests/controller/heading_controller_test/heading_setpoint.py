@@ -6,7 +6,7 @@ def talker():
     pub = rospy.Publisher('/heading_setpoint', Float64, queue_size=10)
     rospy.init_node('heading_setpoint', anonymous=True)
     rate = rospy.Rate(10)
-    i = 350
+    i = 50
     while not rospy.is_shutdown():
         pub.publish(i)
         rate.sleep()

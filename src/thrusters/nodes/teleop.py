@@ -70,66 +70,68 @@ def keyDown(data):
     if key == 'o':
         depthControllerToggle.publish(Bool(False))
         print ('Depth controller disabled.')
-        dt.td1 = 285
-        dt.td2 = 285
-        dt.td3 = 285
-        dt.td4 = 285
+        dt.td1 = 280
+       	dt.td2 = 280
+        dt.td3 = 280
+        dt.td4 = 280
         print("Moving Up")
         depthPub.publish(dt)
 
     elif key == 'l':
         depthControllerToggle.publish(Bool(False))
         print ('Depth controller disabled.')
-        dt.td1 = 295
-        dt.td2 = 295
-        dt.td3 = 295
-        dt.td4 = 295
+        dt.td1 = 300
+        dt.td2 = 300
+        dt.td3 = 300
+        dt.td4 = 300
         print("Moving Down")
         depthPub.publish(dt)
     
     elif key == 'w':
-        vt.tfr = 295
-        vt.tfl = 295
-        vt.trr = 295
-        vt.trl = 295
+	headingControllerToggle.publish(Bool(False))
+        vt.tfr = 250
+        vt.tfl = 330
+        vt.trr = 330
+        vt.trl = 250
         print("Moving forward")
         vectorPub.publish(vt)
 
     elif key == 's':
-        vt.tfr = 285
-        vt.tfl = 285
-        vt.trr = 285
-        vt.trl = 285
+        headingControllerToggle.publish(Bool(False))
+	vt.tfr = 310
+        vt.tfl = 270
+        vt.trr = 270
+        vt.trl = 310
         print("Moving backward")
         vectorPub.publish(vt)
 
     elif key == 'm':
         print ("Heading controller disabled.")
         headingControllerToggle.publish(Bool(False))
-        vt.tfr = 285
-        vt.tfl = 295
-        vt.trr = 285
-        vt.trl = 295
+        vt.tfr = 300
+        vt.tfl = 300
+        vt.trr = 280
+        vt.trl = 280
         print("Yaw right")
         vectorPub.publish(vt)
 
     elif key == 'n':
         print ("Heading controller disabled.")
         headingControllerToggle.publish(Bool(False))
-        vt.tfr = 295
-        vt.tfl = 285
-        vt.trr = 295
-        vt.trl = 285
+        vt.tfr = 280
+        vt.tfl = 280
+        vt.trr = 300
+        vt.trl = 300
         print("Yaw left")
         vectorPub.publish(vt)
 
     elif key == 'a':
         print ("Heading controller disabled.")
         headingControllerToggle.publish(Bool(False))
-        vt.tfr = 330
-        vt.tfl = 250
-        vt.trr = 250
-        vt.trl = 330
+        vt.tfr = 280
+        vt.tfl = 300
+        vt.trr = 280
+        vt.trl = 300
         print("Swaying left")
         vectorPub.publish(vt)
 
@@ -137,10 +139,10 @@ def keyDown(data):
     elif key == 'd':
         print ("Heading controller disabled.")
         headingControllerToggle.publish(Bool(False))
-        vt.tfr = 250
-        vt.tfl = 330
-        vt.trr = 330
-        vt.trl = 250
+        vt.tfr = 300
+        vt.tfl = 280
+        vt.trr = 300
+        vt.trl = 280
         print("Swaying right")
         vectorPub.publish(vt)
 
@@ -154,7 +156,7 @@ def keyDown(data):
     elif key == 'x':
         print ("Actuating dropper")
         dropperPub.publish(Bool(True))
-        time.sleep(.500)
+        time.sleep(1)
         dropperPub.publish(Bool(False))
 
     elif key == 'q':
@@ -172,7 +174,9 @@ def keyDown(data):
         exit()
 
     elif key == 'r':
-        dt.td1 = 290
+        headingControllerToggle.publish(Bool(False))
+	depthControllerToggle.publish(Bool(False))
+	dt.td1 = 290
         dt.td2 = 290
         dt.td3 = 290
         dt.td4 = 290
@@ -218,7 +222,7 @@ if __name__=="__main__":
     rospy.Subscriber('/keyboard/keydown', Key, keyDown)
 
     rospy.Subscriber('/depth', Float64, getDepth)
-    rospy.Subscriber('/imu/HeadingTrue_degree/theta', Float64, getHeading)
+    rospy.Subscriber('/imu/Heading_degree/theta', Float64, getHeading)
 
     rospy.init_node('teleop')
     
