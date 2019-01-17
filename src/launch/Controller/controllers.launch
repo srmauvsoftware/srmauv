@@ -1,4 +1,5 @@
 <launch>
 <include file="$(find launch)/Controller/depth_controller.launch"/>
 <include file="$(find launch)/Controller/heading_controller.launch"/>
+<include file="$(find launch)/Controller/forward_controller.launch"/>
 </launch>

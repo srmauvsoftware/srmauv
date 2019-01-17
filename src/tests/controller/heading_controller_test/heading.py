@@ -3,7 +3,7 @@ import rospy
 from std_msgs.msg import Float64
 
 def talker():
-    pub = rospy.Publisher('/imu/HeadingTrue_degree/theta', Float64, queue_size=10)
+    pub = rospy.Publisher('/imu/Heading_degree/theta', Float64, queue_size=10)
     rospy.init_node('heading_test', anonymous=True)
     rate = rospy.Rate(10)
     i = 0	

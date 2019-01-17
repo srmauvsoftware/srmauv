@@ -1,0 +1,17 @@
+<!-- missionplanner
+vectorthruster depththruster
+depthServer, headingServer
+dcontroller hcontroller -->
+
+<launch>
+<node pkg="mission_planner" type="mission_planner.py" name="missionPlanner" output="screen" launch-prefix="xterm -e"/>
+<include file="$(find launch)/Controller/controllers.launch"/>
+<include file="$(find launch)/Thrusters/thrusters.launch"/>
+<include file="$(find launch)/Actions/actions.launch"/>
+<node pkg="smach_viewer" type="smach_viewer.py" name="smachViewer" output="screen"/>
+
+<node name="depth" pkg="tests" type="depth.py"/>
+<node name="heading" pkg="tests" type="heading.py"/>
+
+
+</launch>
