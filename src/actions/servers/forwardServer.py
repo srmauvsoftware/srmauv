@@ -14,7 +14,8 @@ class forwardAction(object):
     def __init__(self, name):
         self._da = name
         self.headingControllerToggle = rospy.Publisher('/heading_controller/pid_enable', Bool, queue_size=10)
-        self.setpoint_pub = rospy.Publisher('/time_setpoint', Float64, queue_size=10)
+        self.forwardControllerToggle = rospy.Publisher('/forward_controller/pid_enable', Bool, queue_size=10)
+	self.setpoint_pub = rospy.Publisher('/time_setpoint', Float64, queue_size=10)
         self.state_pub = rospy.Publisher('/time', Float64, queue_size=10)
         self._ds = actionlib.SimpleActionServer(
             self._da, \
@@ -46,6 +47,7 @@ class forwardAction(object):
 
         # if success:
         self.headingControllerToggle.publish(Bool(True))
+	self.forwardControllerToggle.publish(Bool(False))
         self._result.time_final = self._feedback.time_error
         rospy.loginfo('%s : Success' % self._da)
         self._ds.set_succeeded(self._result)

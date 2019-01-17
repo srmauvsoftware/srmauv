@@ -11,7 +11,7 @@
       <param name="min_loop_frequency" value="100.0" />
       <remap from="setpoint" to="/time_setpoint" />
       <remap from="state" to="/time" />
-      <remap from="control_effort" to="/vectorThruster/control_effort" />
+      <remap from="control_effort" to="/forwardThruster/control_effort" />
      </node>
 
 </launch>

@@ -160,7 +160,7 @@ def keyDown(data):
         dropperPub.publish(Bool(False))
 
     elif key == 'q':
-        print("resetting and quitting")
+        print("resetting vector")
         dt.td1 = 290
         dt.td2 = 290
         dt.td3 = 290

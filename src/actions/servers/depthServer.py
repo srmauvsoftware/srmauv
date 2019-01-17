@@ -25,23 +25,31 @@ class depthAction(object):
         self._depth = data.data
 
     def depthCallback(self, goal):
-        r = rospy.Rate(10)
+        rospy.loginfo("DEBUGGING")
+	r = rospy.Rate(10)
         success = True
 	successt = False
         new_depth = goal.depth_setpoint
+	start = int(time.time())
         while(goal.depth_setpoint != self._depth):
-            if (abs(goal.depth_setpoint - self._depth) < 1):
-                temp = self._depth
-                start = int(time.time())
-                while (temp == self._depth):
-		    if (int(time.time())!=start+10):
-			#rospy.loginfo("We are close")
-                        continue
-		    else:
-		        successt=True
-			break
-	    if (successt): 
+	    if (int(time.time()) == start+10):
+		success = True
 		break
+           # if (abs(goal.depth_setpoint - self._depth) < 1):
+          #      temp = self._depth
+         #       start = int(time.time())
+	#	rospy.loginfo('start:')
+	#	rospy.loginfo(start)
+         #       while (temp == self._depth):
+	#	    rospy.loginfo(int(time.time()))
+	#	    if (int(time.time())!=start+10):
+	#		rospy.loginfo("We are close")
+         #               continue
+	#	    else:
+	#	        successt=True
+	#		break
+	    #if (successt): 
+	     #   break
             self.pub.publish(new_depth)
             if self._ds.is_preempt_requested():
                 rospy.loginfo('%s : Preempted' % self._da)
