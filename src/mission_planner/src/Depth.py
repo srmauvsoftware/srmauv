@@ -4,10 +4,12 @@ from smach import StateMachine
 from actions.msg import depthGoal, depthAction
 import smach
 from smach_ros import SimpleActionState
+import actionlib
 
 class Depth(smach.State):
     def __init__(self, PRESSURE, TASK):
         self.PRESSURE = PRESSURE
+        # self.smach_StateMachine = smach_StateMachine
         self.TASK = TASK
         smach.State.__init__(self, outcomes=[self.TASK])
 
@@ -40,9 +42,9 @@ class Depth(smach.State):
     def execute(self, ud):
         rospy.loginfo("Executing State Concurrent Depth")
         client = actionlib.SimpleActionClient('depthServer',\
-                                            actions.msg.depthAction)
+                                            depthAction)
         client.wait_for_server()
-        goal = actions.msg.depthGoal(depth_setpoint=self.PRESSURE)
+        goal = depthGoal(depth_setpoint=self.PRESSURE)
         client.send_goal(goal)
         client.wait_for_result()
         result = client.get_state()
