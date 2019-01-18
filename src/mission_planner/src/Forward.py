@@ -7,15 +7,16 @@ import actions.msg
 
 class Forward:
 
-    def __init__(self, smach_StateMachine, TIME, TASK):
-      self.TIME_VALUE = TIME
-      smach_StateMachine.add('FORWARD', \
+    def __init__(self, smach_StateMachine, NAME, TIME, TASK):
+        self.TIME_VALUE = TIME
+    	self.name = NAME
+        smach_StateMachine.add(self.name, \
           SimpleActionState('forwardServer', \
           actions.msg.timeAction, \
           goal_cb=self.goal_callback), \
           transitions={
             'succeeded': TASK,
-            'preempted': 'FORWARD',
+            'preempted': self.name,
             'aborted': 'aborted'
           })
 

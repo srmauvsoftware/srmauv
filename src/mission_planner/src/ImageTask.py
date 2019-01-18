@@ -17,9 +17,11 @@ class ImageTask():
     def __init__(self, smach_StateMachine, TASK):
         self.bridge = CvBridge()
         self.TASK = TASK
-        self.depth_pub = rospy.Publisher('/depth', Float64, queue_size=10)
-        self.heading_pub = rospy.Publisher('/heading', Float64, queue_size=10)
+        self.depth_pub = rospy.Publisher('/depth_setpoint', Float64, queue_size=10)
+        self.heading_pub = rospy.Publisher('/heading_setpoint', Float64, queue_size=10)
         rospy.Subscriber('/camera/image_raw', Image, self.callback)
+	rospy.imagePub = rospy.Publisher('/buoy', Image)
+
         # rospy.Subscriber('/BoundingBox', BoundingBox, self.callback)
         sm_sub = smach.Concurrence(outcomes = ['DepthHeadingReached', 'DepthHeadingFailed'],
                                                 default_outcome='DepthHeadingFailed',
@@ -41,13 +43,25 @@ class ImageTask():
     #     self.box_centre_y = (data.ymax - data.ymin)/2
     #     self.depth_pub.publish(box_centre_y)
     #     self.heading_pub.publish(box_centre_x)
-
+    def startImageTask(self):
+	while True:
+		
+	
     def callback(self, data):
-        rospy.loginfo("sub")
         try:
             cv_image = self.bridge.imgmsg_to_cv2(data, "bgr8")
         except CvBridgeError as e:
             print(e)
+	template = cv2.imread('/home/nvidia/srmauv/src/1.png')
+	w, h = template.shape[:-1]
+	res = cv2.matchTemplate(cv_image, template, cv2.TM_CCOEFF_NORMED)
+	thresh = 0.65
+	loc = np.where(res >= threshold)
+	for pt in zip(*loc[::-1]):
+		cv2.rectangle(cv_image, pt, (pt[0] + w, pt[1] + h), (0, 0, 255), 2)
+	self.imagePub.publish(self.bridge.cv2_to_imgmsg(cv_image, "bgr8"))
+	
+	'''
         gray = cv2.cvtColor(cv_image,cv2.COLOR_BGR2GRAY)
         ret, thresh = cv2.threshold(gray,0,255,cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)
         kernel = np.ones((3,3),np.uint8)
@@ -72,5 +86,6 @@ class ImageTask():
 
         cv2.imshow("Image window", cv_image)
         cv2.waitKey(3)
-        
+        '''
+	
         

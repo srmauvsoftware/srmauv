@@ -9,8 +9,5 @@ dcontroller hcontroller -->
 <include file="$(find launch)/Thrusters/thrusters.launch"/>
 <include file="$(find launch)/Actions/actions.launch"/>
 
-<node name="depth" pkg="tests" type="depth.py"/>
-<node name="heading" pkg="tests" type="heading.py"/>
-
 
 </launch>

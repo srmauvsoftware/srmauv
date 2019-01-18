@@ -6,7 +6,7 @@ from smach_ros import IntrospectionServer
 from Sink import Sink
 from Forward import Forward
 from Heading import Heading
-from ImageTask import ImageTask
+#from ImageTask import ImageTask
 
 
 def main():
@@ -14,9 +14,22 @@ def main():
     sm = smach.StateMachine(outcomes=['mission_complete', 'mission_failed', 'aborted'])
 
     with sm:
-        Sink (sm, 530, 'HEADING')
-        Heading (sm, 0, 'FORWARD')
-        Forward(sm, 10, 'mission_complete')
+        Sink (sm, 'SINK1', 525, 'HEADING1')
+        Heading (sm, 'HEADING1',-98, 'FORWARD1')
+        Forward(sm,'FORWARD1', 5, 'HEADING2')
+	Heading (sm, 'HEADING2',-98, 'FORWARD2')
+	Forward(sm,'FORWARD2', 5, 'HEADING3')
+        Heading (sm, 'HEADING3',-98, 'FORWARD3')
+	Forward(sm,'FORWARD3', 5, 'HEADING4')
+        Heading (sm, 'HEADING4',-98, 'FORWARD4')
+	Forward(sm,'FORWARD4', 5, 'HEADING5')
+        Heading (sm, 'HEADING5',-98, 'FORWARD5')
+	Forward(sm,'FORWARD5', 5, 'HEADING6')
+        Heading (sm, 'HEADING6',-98, 'mission_complete')
+
+	#Heading(sm, 'HEADING2', 180, 'FORWARD2')
+	#Forward(sm, 'FORWARD2', 10, 'HEADING3')
+	#Heading(sm, 'HEADING3', -90, 'mission_complete')
         # Sink(sm, 530, 'FORWARD')
         # Head(sm, 90, 'FORWARD')
         # Forward(sm, 15, 'mission_complete')
