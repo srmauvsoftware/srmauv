@@ -32,13 +32,13 @@ class depthAction(object):
         new_depth = goal.depth_setpoint
 	start = int(time.time())
         while(goal.depth_setpoint != self._depth):
-	    if (int(time.time()) == start+10):
-		success = True
-		break
-           # if (abs(goal.depth_setpoint - self._depth) < 1):
-          #      temp = self._depth
-         #       start = int(time.time())
-	#	rospy.loginfo('start:')
+	    start = int(time.time())
+            while (abs(goal.depth_setpoint - self._depth) < 1.5):
+	        if (int(time.time()) == start+10):
+                    successt = True
+                    rospy.loginfo("10 seconds over")
+                    break
+		#rospy.loginfo('start:')
 	#	rospy.loginfo(start)
          #       while (temp == self._depth):
 	#	    rospy.loginfo(int(time.time()))
@@ -48,8 +48,8 @@ class depthAction(object):
 	#	    else:
 	#	        successt=True
 	#		break
-	    #if (successt): 
-	     #   break
+	    if (successt): 
+	        break
             self.pub.publish(new_depth)
             if self._ds.is_preempt_requested():
                 rospy.loginfo('%s : Preempted' % self._da)

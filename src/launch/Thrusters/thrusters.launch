@@ -1,8 +1,6 @@
 <launch>
 <include file="$(find launch)/Thrusters/depth_thruster.launch"/>
 <include file="$(find launch)/Thrusters/vector_thruster.launch"/>
-<node name="forwardThrusters" pkg="thrusters" type="forwardThruster.py" ns="forwardThruster" output="screen"></node>
-
 </launch>
 
 

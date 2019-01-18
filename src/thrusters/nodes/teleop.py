@@ -62,6 +62,15 @@ def keyUp(data):
         headingSetpointPub.publish(Float64(heading))
         headingControllerToggle.publish(Bool(True))
 
+    elif key == 'a' or key == 'd':
+	print ('Heading controller enabled.')
+	headingControllerToggle.publish(Bool(True))
+
+    elif key == 'w' or key == 's':
+	print ('Heading controller enabled.')
+	headingControllerToggle.publish(Bool(True))
+
+
 
 def keyDown(data):
     key = chr(data.code)

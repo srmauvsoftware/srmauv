@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import rospy
-from std_msgs.msg import Float64
+from std_msgs.msg import Float64, String
 from thrusters.msg import VectorThrusterMsg
 from dynamic_reconfigure.server import Server
 from thrusters.cfg import VectorThrusterCfgConfig
@@ -10,15 +10,46 @@ class VectorThruster:
         self.thrusterPub = rospy.Publisher('/vectorThruster', VectorThrusterMsg, queue_size=10)
         rospy.Rate(10)
         rospy.Subscriber('/vectorThruster/control_effort', Float64, self.thrusterCb)
-        srv = Server(VectorThrusterCfgConfig, self.dynamicThrusterCb)
+        rospy.Subscriber('/vectorThruster/direction', String, self.directionCallback)
+	self.direction = 'default'
+	srv = Server(VectorThrusterCfgConfig, self.dynamicThrusterCb)
 
+    def directionCallback(self, data):
+	self.direction = data.data
+	rospy.loginfo(self.direction)		
+	
     def thrusterCb(self, data):
         msg = VectorThrusterMsg()
-        msg.tfr = 290 - data.data
-        msg.tfl = 290 - data.data
-        msg.trr = 290 + data.data
-        msg.trl = 290 + data.data
-        self.thrusterPub.publish(msg)
+	
+	if (self.direction == 'default' or self.direction == 'yaw'):
+            msg.tfr = 290 - data.data
+            msg.tfl = 290 - data.data
+            msg.trr = 290 + data.data
+            msg.trl = 290 + data.data
+           
+	elif (self.direction == 'forward'):
+	    msg.tfr = 290 - data.data
+            msg.tfl = 290 + data.data
+            msg.trr = 290 + data.data
+            msg.trl = 290 - data.data
+	elif (self.direction == 'backward'):
+	    msg.tfr = 290 + data.data
+            msg.tfl = 290 - data.data
+            msg.trr = 290 - data.data
+            msg.trl = 290 + data.data
+	elif (self.direction == 'sway right'):
+	    msg.tfr = 290 + data.data
+            msg.tfl = 290 - data.data
+            msg.trr = 290 + data.data
+            msg.trl = 290 - data.data
+	elif (self.direction == 'sway left'):
+	    msg.tfr = 290 - data.data
+            msg.tfl = 290 + data.data
+            msg.trr = 290 - data.data
+            msg.trl = 290 + data.data
+
+
+	self.thrusterPub.publish(msg)
 
     def dynamicThrusterCb(self, config, level):
         msg = VectorThrusterMsg()
