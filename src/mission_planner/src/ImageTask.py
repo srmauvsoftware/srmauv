@@ -24,15 +24,16 @@ class ImageTask():
 
         # rospy.Subscriber('/BoundingBox', BoundingBox, self.callback)
         sm_sub = smach.Concurrence(outcomes = ['DepthHeadingReached', 'DepthHeadingFailed'],
-                                                default_outcome='DepthHeadingFailed',
-                                                outcome_map={'DepthHeadingReached':
-                                                {'DEPTH_CONCURRENT':'DepthReached',
-                                                'HEADING_CONCURRENT':'HeadingReached'}})
+                                            default_outcome='DepthHeadingFailed',
+                                            outcome_map={'DepthHeadingReached':
+                                            {'DEPTH_CONCURRENT':'DepthReached',
+                                            'HEADING_CONCURRENT':'HeadingReached'}})
 
         with sm_sub:
-            smach.Concurrence.add('DEPTH_CONCURRENT', Depth(160, 'depth_success'))
-            smach.Concurrence.add('HEADING_CONCURRENT', Heading(320, 'heading_success'))
-        
+            smach.Concurrence.add('DEPTH_CONCURRENT', Depth(self.x, 'depth_success'))
+            smach.Concurrence.add('HEADING_CONCURRENT', Heading(self.y, 'heading_success'))
+
+
         smach.StateMachine.add('IMAGETASK', sm_sub, transitions={
           'DepthHeadingFailed': 'IMAGETASK',
           'DepthHeadingReached': self.TASK

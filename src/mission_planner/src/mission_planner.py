@@ -34,7 +34,9 @@ def main():
         # Head(sm, 90, 'FORWARD')
         # Forward(sm, 15, 'mission_complete')
         #PathAlign(sm, 'mission_complete')
-        # ImageTask(sm, 'mission_complete')
+        #it = ImageTask() # Image Task should return User data which should be
+        # further mapped to Heading etc states
+        #it.init(sm)
 
         sis = IntrospectionServer('ZARNA_MISSION_PLANNER', sm, '/START_ZARNA')
         # start introspection server by - rosrun smach_viewer smach_viewer.py
