@@ -7,19 +7,20 @@ from Sink import Sink
 from Forward import Forward
 from Heading import Heading
 #from ImageTask import ImageTask
-
+from Backward import Backward
 
 def main():
     rospy.init_node('mission_planner')
     sm = smach.StateMachine(outcomes=['mission_complete', 'mission_failed', 'aborted'])
 
     with sm:
-        Sink (sm, 'SINK1', 525, 'HEADING1')
-        Heading (sm, 'HEADING1',-98, 'FORWARD1')
-        Forward(sm,'FORWARD1', 5, 'HEADING2')
-	Heading (sm, 'HEADING2',-98, 'FORWARD2')
-	Forward(sm,'FORWARD2', 5, 'HEADING3')
-        Heading (sm, 'HEADING3',-98, 'FORWARD3')
+        #Sink (sm, 'SINK1', 525, 'mission_complete')
+        #Heading (sm, 'HEADING1',-98, 'FORWARD1')
+        Backward(sm,'FORWARD1', 12, 'mission_complete')
+	#Backward(sm, 'BACKWARD1', 12, 'mission_complete')
+	#Heading (sm, 'HEADING2',-98, 'FORWARD2')
+	#Forward(sm,'FORWARD2', 5, 'HEADING3')
+        #Heading (sm, 'HEADING3',-98, 'FORWARD3')
 	Forward(sm,'FORWARD3', 5, 'HEADING4')
         Heading (sm, 'HEADING4',-98, 'FORWARD4')
 	Forward(sm,'FORWARD4', 5, 'HEADING5')

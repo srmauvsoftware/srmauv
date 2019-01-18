@@ -6,11 +6,11 @@ from smach_ros import SimpleActionState
 import actions.msg
 from std_msgs.msg import String
 
-class Forward:
+class Backward:
 
     def __init__(self, smach_StateMachine, NAME, TIME, TASK):
         self.TIME_VALUE = TIME
-    	self.name = NAME
+        self.name = NAME
         smach_StateMachine.add(self.name, \
           SimpleActionState('forwardServer', \
           actions.msg.timeAction, \
@@ -20,11 +20,12 @@ class Forward:
             'preempted': self.name,
             'aborted': 'aborted'
           })
-	self.pub = rospy.Publisher('/vectorThruster/direction', String)
+        self.pub = rospy.Publisher('/vectorThruster/direction', String)
 
     def goal_callback(self, userdata, goal):
-        rospy.loginfo("Executing State Forward")
-	self.pub.publish(String('forward'))
+        rospy.loginfo("Executing State Backward")
+        self.pub.publish(String('backward'))
         timeOrder = actions.msg.timeGoal()
         timeOrder.time_setpoint = self.TIME_VALUE
         return timeOrder
+
