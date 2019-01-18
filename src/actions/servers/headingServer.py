@@ -4,6 +4,7 @@ import actionlib
 import actions.msg
 from std_msgs.msg import Float64
 import math
+import time
 
 class headingAction(object):
     _feedback = actions.msg.headingFeedback()
@@ -21,17 +22,34 @@ class headingAction(object):
         self._hs.start()
 
     def heading_cb(self, data):
-        if(data < 0):
-            self.heading_value = 360 + data.data
-        else:
-            self.heading_value = data.data
+       # if(data < 0):
+        #    self.heading_value = 360 + data.data
+        #else:
+        self.heading_value = data.data
 
     def headingCallback(self, goal):
         r = rospy.Rate(10)
         success = True
         new_heading = goal.heading_setpoint
+	start = int(time.time())
         while(goal.heading_setpoint != math.floor(self.heading_value)):
-            self.pub.publish(new_heading)
+            if (int(time.time()) == start+30):
+		success = True
+		break
+	  #  if (abs(goal.heading_setpoint - self._heading_value) < 2):
+                temp = self.heading_value
+                start = int(time.time())
+         #       while (temp == self.heading_value):
+	#	    if (int(time.time())!=start+10):
+	#		#rospy.loginfo("We are close")
+         #       	continue
+	#	    else:
+	#	        successt=True
+             #   	break	
+            #if (successt): 
+           #     break
+	    
+	    self.pub.publish(new_heading)
             if self._hs.is_preempt_requested():
                 rospy.loginfo('%s : Preempted' % self._ha)
                 self._hs.set_preempted()
