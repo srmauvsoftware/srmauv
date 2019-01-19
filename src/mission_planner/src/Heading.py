@@ -11,7 +11,8 @@ class Heading(smach.State):
         self.HEADING = HEADING
         self.smach_StateMachine = smach_StateMachine
         self.TASK = TASK
-	self.name = NAME
+        self.name = NAME
+        self.pub = rospy.Publisher('/vectorThruster/direction', String)
         smach.State.__init__(self, outcomes=[self.TASK])
         self.smach_StateMachine.add(self.name, \
                         SimpleActionState('headingServer', \
@@ -22,6 +23,7 @@ class Heading(smach.State):
                                     'aborted':'aborted'})
         
     def headingCallback(self, userdata, goal):
+        self.pub.publish(String('yaw'))
         rospy.loginfo('Executing State New Heading')
         headingOrder = headingGoal()
         headingOrder.heading_setpoint = self.HEADING

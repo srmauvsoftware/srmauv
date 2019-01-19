@@ -4,44 +4,21 @@ from smach import StateMachine
 import smach
 from smach_ros import IntrospectionServer
 from Sink import Sink
-from Forward import Forward
 from Heading import Heading
+from Move import Move
 #from ImageTask import ImageTask
-from Backward import Backward
 
 def main():
     rospy.init_node('mission_planner')
     sm = smach.StateMachine(outcomes=['mission_complete', 'mission_failed', 'aborted'])
 
     with sm:
-        Sink (sm, 'SINK1', 530, 'HEADING1')
-        Heading (sm, 'HEADING1',90, 'mission_complete')
-        Forward(sm, 'FORWARD1', 7, 'mission_complete')
-	#Backward(sm, 'BACKWARD1', 10, 'mission_complete')
-	#Heading(sm, 'HEADING2', -20, 'FORWARD2')
-	#Forward(sm, 'FORWARD2', 6, 'HEADING3')
-	#Heading(sm, 'HEADING3', 60, 'FORWARD3')
-	#Forward(sm, 'FORWARD3', 6, 'HEADING4')
-	#Heading(sm, 'HEADING4', 160, 'mission_complete')
-	#Backward(sm,'BACKWARD1', 3, 'mission_complete')
-	#Backward(sm, 'BACKWARD1', 12, 'mission_complete')
-	#Heading (sm, 'HEADING2',-98, 'FORWARD2')
-	#Forward(sm,'FORWARD2', 5, 'HEADING3')
-        #Heading (sm, 'HEADING3',-98, 'FORWARD3')
-	#Forward(sm,'FORWARD3', 5, 'HEADING4')
-        #Heading (sm, 'HEADING4',-98, 'FORWARD4')
-	#Forward(sm,'FORWARD4', 5, 'HEADING5')
-        #Heading (sm, 'HEADING5',-98, 'FORWARD5')
-	#Forward(sm,'FORWARD5', 5, 'HEADING6')
-        #Heading (sm, 'HEADING6',-98, 'mission_complete')
+        # Sink (sm, 'SINK1', 530, 'HEADING1')
+        # Heading (sm, 'HEADING1',90, 'FORWARD1')
+        Move(sm, 'FORWARD1', 'forward', 7, 'SWAYR1')
+        Move(sm, 'SWAYR1', 'sway right', 7, 'BACKWARD1')
+        Move(sm, 'BACKWARD1', 'backward', 7, 'mission_complete')
 
-	#Heading(sm, 'HEADING2', 180, 'FORWARD2')
-	#Forward(sm, 'FORWARD2', 10, 'HEADING3')
-	#Heading(sm, 'HEADING3', -90, 'mission_complete')
-        # Sink(sm, 530, 'FORWARD')
-        # Head(sm, 90, 'FORWARD')
-        # Forward(sm, 15, 'mission_complete')
-        #PathAlign(sm, 'mission_complete')
         #it = ImageTask() # Image Task should return User data which should be
         # further mapped to Heading etc states
         #it.init(sm)

@@ -6,6 +6,7 @@ import time
 from std_msgs.msg import Int16, Float64, Bool
 import actions.msg
 import subprocess
+from thrusters.msg import VectorThrusterMsg
 
 class forwardAction(object):
     _feedback = actions.msg.timeFeedback()
@@ -14,8 +15,8 @@ class forwardAction(object):
     def __init__(self, name):
         self._da = name
         self.headingControllerToggle = rospy.Publisher('/heading_controller/pid_enable', Bool, queue_size=10)
-        self.forwardControllerToggle = rospy.Publisher('/forward_controller/pid_enable', Bool, queue_size=10)
-	self.setpoint_pub = rospy.Publisher('/time_setpoint', Float64, queue_size=10)
+        self.resetThrusters = rospy.Publisher('/vectorThruster', VectorThrusterMsg)
+        self.setpoint_pub = rospy.Publisher('/time_setpoint', Float64, queue_size=10)
         self.state_pub = rospy.Publisher('/time', Float64, queue_size=10)
         self._ds = actionlib.SimpleActionServer(
             self._da, \
@@ -32,7 +33,6 @@ class forwardAction(object):
 
         while (int(time.time()) != epoch_setpoint):
             self.headingControllerToggle.publish(Bool(False))
-            print("heading off")
             self.setpoint_pub.publish(Float64(time_setpoint))
             if self._ds.is_preempt_requested():
                 rospy.loginfo('%s : Preempted' % self._da)
@@ -50,6 +50,12 @@ class forwardAction(object):
         self._result.time_final = self._feedback.time_error
         rospy.loginfo('%s : Success' % self._da)
         self._ds.set_succeeded(self._result)
+        msg = VectorThrusterMsg()
+        msg.tfr = 290
+        msg.tfl = 290
+        msg.trr = 290
+        msg.trl = 290
+        self.resetThrusters.publish(msg)
 
 if __name__ == '__main__':
       rospy.init_node('forwardServer')

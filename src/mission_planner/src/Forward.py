@@ -24,7 +24,7 @@ class Forward:
 
     def goal_callback(self, userdata, goal):
         rospy.loginfo("Executing State Forward")
-	self.pub.publish(String('forward'))
+        self.pub.publish(String('forward'))
         timeOrder = actions.msg.timeGoal()
         timeOrder.time_setpoint = self.TIME_VALUE
         return timeOrder

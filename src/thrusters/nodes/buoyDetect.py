@@ -55,12 +55,12 @@ class Vision:
             loc = np.where(res >= thresh)
 
         for pt in zip(*loc[::-1]):
-	    print("POint found")
+            print("POint found")
             cv2.rectangle(cv_image, pt, (pt[0] + w, pt[1] + h), (0, 0, 255), 2)
             cv2.line(cv_image, (pt[0] + (w/2), pt[1] + (h/2)),(self.cameraX, self.cameraY),(255, 0, 0), 3)
             x, y = self.findOffsets(pt[0] + (w/2), pt[1] + (h/2))
             self.xPub.publish(x)
-	    print("Setpoint Sent")
+            print("Setpoint Sent")
             self.yPub.publish(y)
             self.imagePub.publish(self.bridge.cv2_to_imgmsg(cv_image, "bgr8"))
 

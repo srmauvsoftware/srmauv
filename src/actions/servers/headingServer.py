@@ -30,18 +30,18 @@ class headingAction(object):
     def headingCallback(self, goal):
         r = rospy.Rate(10)
         success = True
-	successt = False
+        successt = False
         new_heading = goal.heading_setpoint
         while(goal.heading_setpoint != math.floor(self.heading_value)):
             start = int(time.time())
-	    while (abs(goal.heading_setpoint - self.heading_value) < 2.5):
-	    	if (int(time.time()) == start+10):
+            while (abs(goal.heading_setpoint - self.heading_value) < 2.5 or (goal.heading_setpoint)):
+                if (int(time.time()) == start+10):
                     successt = True
                     rospy.loginfo("10 seconds over")
                     break
-	    if (successt):
+            if (successt):
                 break
-	    self.pub.publish(new_heading)
+            self.pub.publish(new_heading)
             if self._hs.is_preempt_requested():
                 rospy.loginfo('%s : Preempted' % self._ha)
                 self._hs.set_preempted()
