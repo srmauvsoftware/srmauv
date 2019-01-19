@@ -1,0 +1,16 @@
+<launch>
+
+<node name="controller" pkg="pid" type="controller" ns="surge_controller" output="screen" >
+      <param name="Kp" value="5.0" />
+      <param name="Ki" value="0" />
+      <param name="Kd" value="0.1" />
+      <param name="upper_limit" value="168" />
+      <param name="lower_limit" value="-168" />
+      <param name="windup_limit" value="168" />
+      <param name="max_loop_frequency" value="100.0" />
+      <param name="min_loop_frequency" value="100.0" />
+      <remap from="setpoint" to="/scale_setpoint" />
+      <remap from="state" to="/scale" />
+      <remap from="control_effort" to="/surge_controller/control_effort" />
+     </node>
+</launch>

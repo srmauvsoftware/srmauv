@@ -22,31 +22,13 @@ class headingAction(object):
         self._hs.start()
 
     def heading_cb(self, data):
-       # if(data < 0):
-        #    self.heading_value = 360 + data.data
-        #else:
         self.heading_value = data.data
 
     def headingCallback(self, goal):
-        r = rospy.Rate(10)
-        success = True
+        success = False
         successt = False
-        new_heading = goal.heading_setpoint
-        while(goal.heading_setpoint != math.floor(self.heading_value)):
-            start = int(time.time())
-            while (abs(goal.heading_setpoint - self.heading_value) < 2.5 or (goal.heading_setpoint)):
-                if (int(time.time()) == start+10):
-                    successt = True
-                    rospy.loginfo("10 seconds over")
-                    break
-            if (successt):
-                break
-            self.pub.publish(new_heading)
-            if self._hs.is_preempt_requested():
-                rospy.loginfo('%s : Preempted' % self._ha)
-                self._hs.set_preempted()
-                success = False
-                break
+        while True:
+            self.pub.publish(goal.heading_setpoint)
             self._feedback.heading_error = self.heading_value
             self._hs.publish_feedback(self._feedback)
             self._feedback.heading_error = self.heading_value - goal.heading_setpoint
@@ -54,13 +36,28 @@ class headingAction(object):
                 self._ha, \
                 goal.heading_setpoint, \
                 self._feedback.heading_error)
-            r.sleep()
+
+            # Logic
+            start = int(time.time())
+            while(abs(goal.heading_setpoint - self.heading_value) < 2):
+                if(int(time.time()) == start + 10):
+                    successt = True
+                    rospy.loginfo("10 sec over")
+                    break
+            if(successt):
+                success = True
+                break
+
+            if self._hs.is_preempt_requested():
+                rospy.loginfo('%s : Preempted' % self._ha)
+                self._hs.set_preempted()
+                success = False
+                break
 
         if success:
             self._result.heading_final = self._feedback.heading_error
             rospy.loginfo('%s : Success' % self._ha)
             self._hs.set_succeeded(self._result)
-
 
 if __name__ == '__main__':
     rospy.init_node('headingServer')

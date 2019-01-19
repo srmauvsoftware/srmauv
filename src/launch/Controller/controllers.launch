@@ -1,5 +1,6 @@
 <launch>
 <include file="$(find launch)/Controller/depth_controller.launch"/>
-<include file="$(find launch)/Controller/heading_controller.launch"/>
-<include file="$(find launch)/Controller/forward_controller.launch"/>
+<include file="$(find launch)/Controller/yaw_controller.launch"/>
+<include file="$(find launch)/Controller/surge_controller.launch"/>
+<include file="$(find launch)/Controller/sway_controller.launch"/>
 </launch>
