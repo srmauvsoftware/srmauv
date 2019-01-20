@@ -6,7 +6,7 @@ def talker():
     pub = rospy.Publisher('/imu/Heading_degree/theta', Float64, queue_size=10)
     rospy.init_node('heading_test', anonymous=True)
     rate = rospy.Rate(10)
-    i = 0	
+    i = 91.5	
     while not rospy.is_shutdown():
         pub.publish(i)
         rate.sleep()

@@ -16,9 +16,9 @@ def main():
 
     with sm:
         # Sink (sm, 'SINK1', 530, 'HEADING1')
-        Sway(sm, 'SWAY1', -20, 'SWAY2')
-        Sway(sm, 'SWAY2', 20, 'mission_complete')
-        # Heading(sm, 'HEADING1', 90, 'FORWARD1')
+        # Sway(sm, 'SWAY1', -20, 'SWAY2')
+        # Sway(sm, 'SWAY2', 20, 'mission_complete')
+        Heading(sm, 'HEADING1', 90, 'mission_complete')
         # Forward(sm, 'FORWARD1', 5, 'mission_complete')
         # Forward(sm, 'FORWARD1', -5, 'SWAYR1')
 
