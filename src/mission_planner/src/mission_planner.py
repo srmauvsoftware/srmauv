@@ -6,6 +6,7 @@ from smach_ros import IntrospectionServer
 from Sink import Sink
 from Heading import Heading
 from Move import Move
+from Torpedo import Torpedo
 #from ImageTask import ImageTask
 
 def main():
@@ -13,11 +14,12 @@ def main():
     sm = smach.StateMachine(outcomes=['mission_complete', 'mission_failed', 'aborted'])
 
     with sm:
-        # Sink (sm, 'SINK1', 530, 'HEADING1')
+        Torpedo()
+	#Sink (sm, 'SINK1', 544, 'FORWARD1')
         # Heading (sm, 'HEADING1',90, 'FORWARD1')
-        Move(sm, 'FORWARD1', 'forward', 7, 'SWAYR1')
-        Move(sm, 'SWAYR1', 'sway right', 7, 'BACKWARD1')
-        Move(sm, 'BACKWARD1', 'backward', 7, 'mission_complete')
+        #Move(sm, 'FORWARD1', 'forward', 15, 'SWAYR1')
+        #Move(sm, 'SWAYR1', 'sway right', 10, 'BACKWARD1')
+        #Move(sm, 'BACKWARD1', 'backward', 12, 'mission_complete')
 
         #it = ImageTask() # Image Task should return User data which should be
         # further mapped to Heading etc states
