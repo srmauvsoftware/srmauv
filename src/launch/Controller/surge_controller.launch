@@ -9,8 +9,8 @@
       <param name="windup_limit" value="168" />
       <param name="max_loop_frequency" value="100.0" />
       <param name="min_loop_frequency" value="100.0" />
-      <remap from="setpoint" to="/scale_setpoint" />
-      <remap from="state" to="/scale" />
+      <remap from="setpoint" to="/surge_scale_setpoint" />
+      <remap from="state" to="/surge_scale" />
       <remap from="control_effort" to="/surge_controller/control_effort" />
      </node>
 </launch>

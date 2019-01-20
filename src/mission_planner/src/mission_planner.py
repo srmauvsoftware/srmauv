@@ -5,7 +5,9 @@ import smach
 from smach_ros import IntrospectionServer
 from Sink import Sink
 from Heading import Heading
-from Move import Move
+from Forward import Forward
+from Sway import Sway
+import time
 #from ImageTask import ImageTask
 
 def main():
@@ -14,10 +16,11 @@ def main():
 
     with sm:
         # Sink (sm, 'SINK1', 530, 'HEADING1')
-        # Heading (sm, 'HEADING1',90, 'FORWARD1')
-        Move(sm, 'FORWARD1', 'forward', 7, 'SWAYR1')
-        Move(sm, 'SWAYR1', 'sway right', 7, 'BACKWARD1')
-        Move(sm, 'BACKWARD1', 'backward', 7, 'mission_complete')
+        Sway(sm, 'SWAY1', -20, 'SWAY2')
+        Sway(sm, 'SWAY2', 20, 'mission_complete')
+        # Heading(sm, 'HEADING1', 90, 'FORWARD1')
+        # Forward(sm, 'FORWARD1', 5, 'mission_complete')
+        # Forward(sm, 'FORWARD1', -5, 'SWAYR1')
 
         #it = ImageTask() # Image Task should return User data which should be
         # further mapped to Heading etc states

@@ -6,13 +6,13 @@ from smach_ros import SimpleActionState
 import actions.msg
 from std_msgs.msg import String
 
-class Forward:
+class Sway:
 
     def __init__(self, smach_StateMachine, NAME, TIME, TASK):
         self.TIME_VALUE = TIME
     	self.name = NAME
         smach_StateMachine.add(self.name, \
-          SimpleActionState('surgeServer', \
+          SimpleActionState('swayServer', \
           actions.msg.timeAction, \
           goal_cb=self.goal_callback), \
           transitions={
@@ -22,7 +22,7 @@ class Forward:
           })
 
     def goal_callback(self, userdata, goal):
-        rospy.loginfo("Executing State Forward")
+        rospy.loginfo("Executing State Sway")
         timeOrder = actions.msg.timeGoal()
         timeOrder.time_setpoint = self.TIME_VALUE
         return timeOrder

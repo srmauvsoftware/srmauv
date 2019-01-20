@@ -26,44 +26,34 @@ class depthAction(object):
 
     def depthCallback(self, goal):
         rospy.loginfo("DEBUGGING")
-	r = rospy.Rate(10)
+        # r = rospy.Rate(10)
         success = True
-	successt = False
+        successt = False
         new_depth = goal.depth_setpoint
-	start = int(time.time())
+        start = int(time.time())
         while(goal.depth_setpoint != self._depth):
-	    start = int(time.time())
+            start = int(time.time())
             while (abs(goal.depth_setpoint - self._depth) < 1.5):
-	        if (int(time.time()) == start+10):
+                if (int(time.time()) == start+10):
                     successt = True
                     rospy.loginfo("10 seconds over")
                     break
-		#rospy.loginfo('start:')
-	#	rospy.loginfo(start)
-         #       while (temp == self._depth):
-	#	    rospy.loginfo(int(time.time()))
-	#	    if (int(time.time())!=start+10):
-	#		rospy.loginfo("We are close")
-         #               continue
-	#	    else:
-	#	        successt=True
-	#		break
-	    if (successt): 
-	        break
-            self.pub.publish(new_depth)
-            if self._ds.is_preempt_requested():
-                rospy.loginfo('%s : Preempted' % self._da)
-                self._ds.set_preempted()
-                success = False
+            if (successt): 
                 break
-            self._feedback.depth_error = self._depth
-            self._ds.publish_feedback(self._feedback)
-            self._feedback.depth_error = self._depth - goal.depth_setpoint
-            #rospy.loginfo('%s : Going to Depth %f with Error : %f',\
-                #self._da , \
-                #goal.depth_setpoint, \
-                #self._feedback.depth_error)
-            r.sleep()
+        self.pub.publish(new_depth)
+        if self._ds.is_preempt_requested():
+            rospy.loginfo('%s : Preempted' % self._da)
+            self._ds.set_preempted()
+            success = False
+            break
+        self._feedback.depth_error = self._depth
+        self._ds.publish_feedback(self._feedback)
+        self._feedback.depth_error = self._depth - goal.depth_setpoint
+        #rospy.loginfo('%s : Going to Depth %f with Error : %f',\
+            #self._da , \
+            #goal.depth_setpoint, \
+            #self._feedback.depth_error)
+        r.sleep()
 
         if success:
             self._result.depth_final = self._feedback.depth_error
