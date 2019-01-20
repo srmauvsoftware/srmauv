@@ -7,48 +7,42 @@ from thrusters.cfg import VectorThrusterCfgConfig
 
 class VectorThruster:
     def __init__(self):
-        rospy.Subscriber('/vectorThruster/direction', String, self.directionCallback)
         self.thrusterPub = rospy.Publisher('/vectorThruster', VectorThrusterMsg, queue_size=10)
         rospy.Rate(10)
-        rospy.Subscriber('/vectorThruster/control_effort', Float64, self.thrusterCb)
-        self.direction = 'default'
+        self.yaw = 0
+        self.sway = 0
+        self.surge = 0
+        rospy.Subscriber('/yaw_controller/control_effort', Float64, self.yawCallback)
+        rospy.Subscriber('/surge_controller/control_effort', Float64, self.surgeCallback)
+        rospy.Subscriber('/sway_controller/control_effort', Float64, self.swayCallback)
         srv = Server(VectorThrusterCfgConfig, self.dynamicThrusterCb)
 
-    def directionCallback(self, data):
-        self.direction = data.data
-        rospy.loginfo(self.direction)		
-	
-    def thrusterCb(self, data):
+    def yawCallback(self, data):
+        print("From yaw Callback")
+        print(data.data)
+        self.yaw = data.data
+
+    def swayCallback(self, data):
+        self.sway = data.data
+
+    def surgeCallback(self, data):
+        self.surge = data.data
+
+    def thrusterCb(self):
         msg = VectorThrusterMsg()
-	
-        if (self.direction == 'default' or self.direction == 'yaw'):
-            msg.tfr = 290 - data.data
-            msg.tfl = 290 - data.data
-            msg.trr = 290 + data.data
-            msg.trl = 290 + data.data
-            
-        elif (self.direction == 'forward'):
-            msg.tfr = 290 - data.data
-            msg.tfl = 290 + data.data
-            msg.trr = 290 + data.data
-            msg.trl = 290 - data.data
-        elif (self.direction == 'backward'):
-            msg.tfr = 290 + data.data
-            msg.tfl = 290 - data.data
-            msg.trr = 290 - data.data
-            msg.trl = 290 + data.data
-        elif (self.direction == 'sway right'):
-            msg.tfr = 290 + data.data
-            msg.tfl = 290 - data.data
-            msg.trr = 290 + data.data
-            msg.trl = 290 - data.data
-        elif (self.direction == 'sway left'):
-            msg.tfr = 290 - data.data
-            msg.tfl = 290 + data.data
-            msg.trr = 290 - data.data
-            msg.trl = 290 + data.data
+        print("thruster cb")
+        msg.tfr = 290 + self.mapThrust(-self.surge +self.sway +self.yaw)
+        msg.tfl = 290 + self.mapThrust( self.surge -self.sway +self.yaw)
+        msg.trr = 290 + self.mapThrust( self.surge +self.sway -self.yaw)
+        msg.trl = 290 + self.mapThrust(-self.surge -self.sway -self.yaw)
+        self.thrusterPub.publish(msg)
 
-
+    def vectorShutdown(self):
+        msg = VectorThrusterMsg()
+        msg.tfr = 290
+        msg.tfl = 290
+        msg.trr = 290
+        msg.trl = 290
         self.thrusterPub.publish(msg)
 
     def dynamicThrusterCb(self, config, level):
@@ -60,10 +54,12 @@ class VectorThruster:
         self.thrusterPub.publish(msg)
         return config
 
+    def mapThrust(self, x, in_min=-504, in_max=504, out_min=-168, out_max=168):
+        return int((x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min)
+
 if __name__ == '__main__':
     try:
-
-        rospy.init_node('vectorThuster', anonymous=True)
+        rospy.init_node('vectorThuster')
         thruster = VectorThruster()
         msg = VectorThrusterMsg()
         msg.tfr = 290
@@ -71,6 +67,8 @@ if __name__ == '__main__':
         msg.trr = 290
         msg.trl = 290
         thruster.thrusterPub.publish(msg)
-        rospy.spin()
-
+        while not rospy.is_shutdown():
+            thruster.thrusterCb()
+            rospy.sleep(1)
+        rospy.on_shutdown(thruster.vectorShutdown)
     except rospy.ROSInterruptException: pass

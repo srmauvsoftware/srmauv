@@ -19,22 +19,9 @@ def main():
     with sm:
         Sink (sm, 'SINK1', 530, 'HEADING1')
         Heading(sm, 'HEADING1', theta, 'FORWARD1')
-        Forward(sm, 'FORWARD1', 14, 'DETECTBUOY')
-        DetectBuoy(sm, 'DETECTBUOY', 'FORWARD2')
-        Forward(sm, 'FORWARD2', 14, 'HEADING2')
-        Heading(sm, 'HEADING2', theta + 45, 'FORWARD3')
-        Forward(sm, 'FORWARD3', 14, 'SWAY1')
-        #torpedo fire
-        Sway(sm, 'SWAY1', -5, 'FORWARD4')
-        Forward(sm, 'FORWARD4', 10, 'SINK2')
-        Sink (sm, 'SINK2', 510, 'mission_complete') #resurface
-
-        #it = ImageTask() # Image Task should return User data which should be
-        # further mapped to Heading etc states
-        #it.init(sm)
+        Forward(sm, 'FORWARD1', 14, 'mission_complete')
 
         sis = IntrospectionServer('ZARNA_MISSION_PLANNER', sm, '/START_ZARNA')
-        # start introspection server by - rosrun smach_viewer smach_viewer.py
         sis.start()
         outcome = sm.execute()
 
