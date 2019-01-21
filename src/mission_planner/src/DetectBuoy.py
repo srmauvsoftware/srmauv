@@ -23,7 +23,6 @@ class DetectBuoy(smach.State):
         self.Ky = 0.05
 
     def pressureCallback(self, data):
-        rospy.loginfo("xcvbnSXDCFm")
         self.pressure = data.data
 
     def execute(self, ud):
@@ -62,8 +61,8 @@ class DetectBuoy(smach.State):
         else: return 'aborted'
 
     def bbCallback(self, data):
-        rospy.loginfo("Sdfdgfhg")
-        buoybbs = []
+        rospy.loginfo("BBox callback")
+	buoybbs = []
         bbs = data.bounding_boxes
         for bb in bbs:
             bb = BoundingBox()
@@ -73,9 +72,11 @@ class DetectBuoy(smach.State):
                           'x': bb['x'], 'y': bb['y'],
                           'w': bb['w'], 'h': bb['h']}
                 buoybbs.append(buoybb)
-
+	
         if buoybbs:
             nearestBuoy = self.nearestBuoy(buoybbs)
+	    rospy.loginfo("nearest buoy")
+	    rospy.loginfo(nearestBuoy)
             goalX = (nearestBuoy['x'] - 640) * self.Kx
             goalY = (nearestBuoy['y'] - 320) * self.Ky + self.pressure 
             resultX = self.send_goal('depthServer', depthAction, depthGoal(depth_setpoint=goalY))

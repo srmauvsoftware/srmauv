@@ -107,10 +107,10 @@ def keyDown(data):
 
     elif key == 's':
         headingControllerToggle.publish(Bool(False))
-	vt.tfr = 310
-        vt.tfl = 270
-        vt.trr = 270
-        vt.trl = 310
+	vt.tfr = 330
+        vt.tfl = 250
+        vt.trr = 250
+        vt.trl = 330
         print("Moving backward")
         vectorPub.publish(vt)
 
@@ -219,10 +219,10 @@ if __name__=="__main__":
     vt = VectorThrusterMsg()
 
     depthSetpointPub = rospy.Publisher('/depth_setpoint', Float64, queue_size=10)
-    depthControllerToggle = rospy.Publisher('/depth_controller/pid_enable', Bool, queue_size=10)
+    depthControllerToggle = rospy.Publisher('/heave_controller/pid_enable', Bool, queue_size=10)
     
     headingSetpointPub = rospy.Publisher('/heading_setpoint', Float64, queue_size=10)
-    headingControllerToggle = rospy.Publisher('/heading_controller/pid_enable', Bool, queue_size=10)
+    headingControllerToggle = rospy.Publisher('/yaw_controller/pid_enable', Bool, queue_size=10)
 
     torpedoPub = rospy.Publisher('/torpedo', Bool, queue_size=10)
     dropperPub = rospy.Publisher('/dropper', Bool, queue_size=10)

@@ -18,7 +18,7 @@ def main():
 
     with sm:
 
-        Heading(sm, 'HEADING1', theta, 'mission_complete')
+        Sink(sm, 'DEPTH1', 545, 'mission_complete')
 
         sis = IntrospectionServer('ZARNA_MISSION_PLANNER', sm, '/START_ZARNA')
         sis.start()

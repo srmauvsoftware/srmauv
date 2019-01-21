@@ -26,7 +26,7 @@ class depthAction(object):
 
     def depthCallback(self, goal):
         rospy.loginfo("DEBUGGING")
-        # r = rospy.Rate(10)
+        r = rospy.Rate(10)
         success = True
         successt = False
         new_depth = goal.depth_setpoint
@@ -40,19 +40,19 @@ class depthAction(object):
                     break
             if (successt): 
                 break
-        self.pub.publish(new_depth)
-        if self._ds.is_preempt_requested():
-            rospy.loginfo('%s : Preempted' % self._da)
-            self._ds.set_preempted()
-            success = False
-            break
+       	    self.pub.publish(new_depth)
+            if self._ds.is_preempt_requested():
+                rospy.loginfo('%s : Preempted' % self._da)
+                self._ds.set_preempted()
+                success = False
+                break
         self._feedback.depth_error = self._depth
         self._ds.publish_feedback(self._feedback)
         self._feedback.depth_error = self._depth - goal.depth_setpoint
-        #rospy.loginfo('%s : Going to Depth %f with Error : %f',\
-            #self._da , \
-            #goal.depth_setpoint, \
-            #self._feedback.depth_error)
+        rospy.loginfo('%s : Going to Depth %f with Error : %f',\
+            self._da , \
+            goal.depth_setpoint, \
+            self._feedback.depth_error)
         r.sleep()
 
         if success:

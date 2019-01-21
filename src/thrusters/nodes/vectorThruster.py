@@ -18,8 +18,6 @@ class VectorThruster:
         srv = Server(VectorThrusterCfgConfig, self.dynamicThrusterCb)
 
     def yawCallback(self, data):
-        print("From yaw Callback")
-        print(data.data)
         self.yaw = data.data
 
     def swayCallback(self, data):
@@ -28,13 +26,19 @@ class VectorThruster:
     def surgeCallback(self, data):
         self.surge = data.data
 
+    def maxmin(self, control_effort):
+	if control_effort < -168:
+	    control_effort = -168
+	if control_effort > 168:
+	    control_efffort = 168
+	return control_effort
+
     def thrusterCb(self):
         msg = VectorThrusterMsg()
-        print("thruster cb")
-        msg.tfr = 290 + self.mapThrust(-self.surge +self.sway +self.yaw)
-        msg.tfl = 290 + self.mapThrust( self.surge -self.sway +self.yaw)
-        msg.trr = 290 + self.mapThrust( self.surge +self.sway -self.yaw)
-        msg.trl = 290 + self.mapThrust(-self.surge -self.sway -self.yaw)
+        msg.tfr = 290 + self.maxmin(-self.surge +self.sway -self.yaw)
+        msg.tfl = 290 + self.maxmin( self.surge -self.sway -self.yaw)
+        msg.trr = 290 + self.maxmin( self.surge +self.sway +self.yaw)
+        msg.trl = 290 + self.maxmin(-self.surge -self.sway +self.yaw)
         self.thrusterPub.publish(msg)
 
     def vectorShutdown(self):
@@ -54,7 +58,7 @@ class VectorThruster:
         self.thrusterPub.publish(msg)
         return config
 
-    def mapThrust(self, x, in_min=-504, in_max=504, out_min=-168, out_max=168):
+    def mapThrust(self, x, in_min=-504, in_max=504, out_min=-100, out_max=100):
         return int((x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min)
 
 if __name__ == '__main__':

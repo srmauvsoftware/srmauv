@@ -17,8 +17,8 @@ def main():
     theta = 0
 
     with sm:
-        Sink (sm, 'SINK1', 530, 'HEADING1')
-        Heading(sm, 'HEADING1', theta, 'mission_complete')
+        Sink (sm, 'SINK1', 547, 'HEADING1')
+        Heading(sm, 'HEADING1', 90, 'mission_complete')
 
         #it = ImageTask() # Image Task should return User data which should be
         # further mapped to Heading etc states

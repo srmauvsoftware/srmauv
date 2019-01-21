@@ -32,10 +32,10 @@ class DepthThruster:
 
     def thrusterCb(self):
         msg = DepthThrusterMsg()
-        msg.td1 = 290 + self.mapThrust(self.roll + self.pitch + self.heave)
-        msg.td2 = 290 + self.mapThrust(self.roll + self.pitch + self.heave)
-        msg.td3 = 290 + self.mapThrust(self.roll + self.pitch + self.heave)
-        msg.td4 = 290 + self.mapThrust(self.roll + self.pitch + self.heave)
+        msg.td1 = 290 + self.roll + self.pitch + self.heave
+        msg.td2 = 290 + self.roll + self.pitch + self.heave
+        msg.td3 = 290 + self.roll + self.pitch + self.heave
+        msg.td4 = 290 + self.roll + self.pitch + self.heave
         self.thrusterPub.publish(msg)
 
     def dynamicThrusterCb(self, config, level):

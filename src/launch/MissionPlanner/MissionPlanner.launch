@@ -4,7 +4,7 @@ depthServer, headingServer
 dcontroller hcontroller -->
 
 <launch>
-<node pkg="mission_planner" type="mission_planner.py" name="missionPlanner" output="screen"/>
+<node pkg="mission_planner" type="test3.py" name="test3" output="screen"/>
 <include file="$(find launch)/Controller/controllers.launch"/>
 <include file="$(find launch)/Thrusters/thrusters.launch"/>
 <include file="$(find launch)/Actions/actions.launch"/>
