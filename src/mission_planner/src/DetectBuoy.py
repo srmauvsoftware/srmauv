@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 
 from std_msgs.msg import Float64
-import roslib; roslib.load_manifest('smach_tutorials')
+import roslib; roslib.load_manifest('mission_planner')
 import rospy
 import smach
 import smach_ros
-from darknet_ros.msg import BoundingBoxes, BoundingBox
+from darknet_ros_msgs.msg import BoundingBoxes, BoundingBox
 import math
 from actions.msg import depthGoal, depthAction
 from actions.msg import timeGoal, timeAction
@@ -15,22 +15,24 @@ Is callback updating pressure?
 Dynamic Reconfigure for Kx and Ky consts.
 '''
 class DetectBuoy(smach.State):
-    def __init__(self, TASK):
-        self.TASK = TASK
-        self.bbSub = rospy.Subscriber("/BoundingBox", BoundingBoxes, self.bbCallback)
-        self.pressureSub("/depth", Float64, self.pressureCallback)
-        smach.State.__init__(self, outcomes=[self.TASK])
+    def __init__(self):
+        smach.State.__init__(self, outcomes=['buoy_success','buoy_retry'])
         self.buoySuccess = False
         self.pressure = 0
         self.Kx = 0.1
         self.Ky = 0.05
 
     def pressureCallback(self, data):
-        self.preesure = data.data
+        rospy.loginfo("xcvbnSXDCFm")
+        self.pressure = data.data
 
     def execute(self, ud):
+        rospy.Subscriber("/BoundingBox", BoundingBoxes, self.bbCallback)
+        rospy.Subscriber("/depth", Float64, self.pressureCallback)
         if self.buoySuccess:
-            return self.TASK
+            return 'buoy_success'
+        else:
+            return 'buoy_retry'
 
     def distance(self, buoy):
         return math.sqrt((buoy['x'] - 640)**2 + (buoy['y'] - 320)**2)
@@ -60,6 +62,7 @@ class DetectBuoy(smach.State):
         else: return 'aborted'
 
     def bbCallback(self, data):
+        rospy.loginfo("Sdfdgfhg")
         buoybbs = []
         bbs = data.bounding_boxes
         for bb in bbs:
@@ -74,7 +77,7 @@ class DetectBuoy(smach.State):
         if buoybbs:
             nearestBuoy = self.nearestBuoy(buoybbs)
             goalX = (nearestBuoy['x'] - 640) * self.Kx
-            goalY = (nearestBuoy['y'] - 320) * self.Ky + self.preesure 
+            goalY = (nearestBuoy['y'] - 320) * self.Ky + self.pressure 
             resultX = self.send_goal('depthServer', depthAction, depthGoal(depth_setpoint=goalY))
             resultY = self.send_goal('swayServer', timeAction, timeGoal(time_setpoint=goalX))
             if resultX == "depthServerReached" and resultY == "swayServerReached":

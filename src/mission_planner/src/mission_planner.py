@@ -8,6 +8,7 @@ from Heading import Heading
 from Forward import Forward
 from Sway import Sway
 import time
+from DetectBuoy import DetectBuoy
 #from ImageTask import ImageTask
 
 def main():
@@ -17,6 +18,8 @@ def main():
     theta = 0
 
     with sm:
+        # smach.StateMachine.add('TORPEDO', Torpedo(), transitions={'torpedo_success':'mission_complete'})
+        # smach.StateMachine.add('DETECTBUOY', DetectBuoy(), transitions={'buoy_success':'mission_complete', 'buoy_retry': 'DETECTBUOY'})
         Sink (sm, 'SINK1', 530, 'HEADING1')
         Heading(sm, 'HEADING1', theta, 'FORWARD1')
         Forward(sm, 'FORWARD1', 14, 'DETECTBUOY')
