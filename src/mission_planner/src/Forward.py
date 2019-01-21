@@ -12,7 +12,7 @@ class Forward:
         self.TIME_VALUE = TIME
     	self.name = NAME
         smach_StateMachine.add(self.name, \
-          SimpleActionState('forwardServer', \
+          SimpleActionState('surgeServer', \
           actions.msg.timeAction, \
           goal_cb=self.goal_callback), \
           transitions={
@@ -20,11 +20,9 @@ class Forward:
             'preempted': self.name,
             'aborted': 'aborted'
           })
-	self.pub = rospy.Publisher('/vectorThruster/direction', String)
 
     def goal_callback(self, userdata, goal):
         rospy.loginfo("Executing State Forward")
-        self.pub.publish(String('forward'))
         timeOrder = actions.msg.timeGoal()
         timeOrder.time_setpoint = self.TIME_VALUE
         return timeOrder

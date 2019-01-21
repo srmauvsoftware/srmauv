@@ -9,8 +9,8 @@
       <param name="windup_limit" value="160"/>
       <param name="max_loop_frequency" value="100.0" />
       <param name="min_loop_frequency" value="100.0" />
-      <remap from="setpoint" to="/time_setpoint" />
-      <remap from="state" to="/time" />
+      <remap from="setpoint" to="/sway_scale_setpoint" />
+      <remap from="state" to="/sway_scale" />
       <remap from="control_effort" to="/sway_controller/control_effort" />
      </node>
 </launch>

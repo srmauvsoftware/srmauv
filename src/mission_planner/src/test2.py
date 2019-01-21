@@ -5,15 +5,9 @@ import smach
 from smach_ros import IntrospectionServer
 from Sink import Sink
 from Heading import Heading
-<<<<<<< HEAD
-from Move import Move
-from Torpedo import Torpedo
-=======
 from Forward import Forward
 from Sway import Sway
 import time
-from DetectBuoy import DetectBuoy
->>>>>>> 3d55821394d8e9b56678e1437c9c353076ed70d5
 #from ImageTask import ImageTask
 
 def main():
@@ -23,19 +17,8 @@ def main():
     theta = 0
 
     with sm:
-        # smach.StateMachine.add('TORPEDO', Torpedo(), transitions={'torpedo_success':'mission_complete'})
-        # smach.StateMachine.add('DETECTBUOY', DetectBuoy(), transitions={'buoy_success':'mission_complete', 'buoy_retry': 'DETECTBUOY'})
         Sink (sm, 'SINK1', 530, 'HEADING1')
-        Heading(sm, 'HEADING1', theta, 'FORWARD1')
-        Forward(sm, 'FORWARD1', 14, 'DETECTBUOY')
-        DetectBuoy(sm, 'DETECTBUOY', 'FORWARD2')
-        Forward(sm, 'FORWARD2', 14, 'HEADING2')
-        Heading(sm, 'HEADING2', theta + 45, 'FORWARD3')
-        Forward(sm, 'FORWARD3', 14, 'SWAY1')
-        #torpedo fire
-        Sway(sm, 'SWAY1', -5, 'FORWARD4')
-        Forward(sm, 'FORWARD4', 10, 'SINK2')
-        Sink (sm, 'SINK2', 510, 'mission_complete') #resurface
+        Heading(sm, 'HEADING1', theta, 'mission_complete')
 
         #it = ImageTask() # Image Task should return User data which should be
         # further mapped to Heading etc states
