@@ -33,7 +33,7 @@ class depthAction(object):
         start = int(time.time())
         while(goal.depth_setpoint != self._depth):
             start = int(time.time())
-            while (abs(goal.depth_setpoint - self._depth) < 1.5):
+            while (abs(goal.depth_setpoint - self._depth) < 3):
                 if (int(time.time()) == start+10):
                     successt = True
                     rospy.loginfo("10 seconds over")

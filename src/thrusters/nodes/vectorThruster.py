@@ -35,10 +35,10 @@ class VectorThruster:
 
     def thrusterCb(self):
         msg = VectorThrusterMsg()
-        msg.tfr = 290 + self.maxmin(-self.surge +self.sway -self.yaw)
+        msg.tfr = 290 - self.maxmin(-self.surge +self.sway -self.yaw)
         msg.tfl = 290 + self.maxmin( self.surge -self.sway -self.yaw)
         msg.trr = 290 + self.maxmin( self.surge +self.sway +self.yaw)
-        msg.trl = 290 + self.maxmin(-self.surge -self.sway +self.yaw)
+        msg.trl = 290 - self.maxmin(-self.surge -self.sway +self.yaw)
         self.thrusterPub.publish(msg)
 
     def vectorShutdown(self):

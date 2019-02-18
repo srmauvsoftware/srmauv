@@ -7,6 +7,7 @@
 
 ros::NodeHandle(nh);
 SimpleKalmanFilter pressureKF(1, 1, 0.01);
+Adafuit_BNO055 bno = Adafuit_BNO055(28);
 
 void torpedoCb( const std_msgs::Bool& msg){
   
@@ -38,6 +39,12 @@ std_msgs::Float64 depth;
 ros::Publisher depth_pub("/depth", &depth);
 ros::Subscriber<std_msgs::Bool> tsub("/torpedo", &torpedoCb );
 ros::Subscriber<std_msgs::Bool> dsub("/dropper", &dropperCb );
+std_msgs::Float64 p;
+std_msgs::Float64 i;
+std_msgs::Float64 d;
+ros::Publisher p_pub("/p", &p);
+ros::Publisher i_pub("/i", &i);
+ros::Publisher d_pub("/d", &d);
 
 void setup(){
   pinMode(9, OUTPUT);
@@ -60,5 +67,8 @@ void loop(){
   int pressure = analogRead(A0);
   depth.data = pressureKF.updateEstimate(pressure);
   depth_pub.publish(&depth);
+  p_pub.publish(&p);
+  i_pub.publish(&i);
+  d_pub.publish(&d);
   nh.spinOnce();
 }

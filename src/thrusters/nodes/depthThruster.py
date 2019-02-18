@@ -12,7 +12,6 @@ from thrusters.cfg import DepthThrusterCfgConfig
 class DepthThruster:
     def __init__(self):
         self.thrusterPub = rospy.Publisher('/depthThruster', DepthThrusterMsg, queue_size=10)
-        rospy.Rate(10)
         self.roll = 0
         self.pitch = 0
         self.heave = 0
@@ -70,7 +69,6 @@ if __name__ == '__main__':
         thruster.thrusterPub.publish(msg)
         while not rospy.is_shutdown():
             thruster.thrusterCb()
-            rospy.sleep(1)
         rospy.on_shutdown(thruster.depthShutdown)
 
     except rospy.ROSInterruptException: pass

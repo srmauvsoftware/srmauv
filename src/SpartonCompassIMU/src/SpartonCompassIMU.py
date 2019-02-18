@@ -295,7 +295,6 @@ if __name__ == '__main__':
                                 Pos_pub.publish(SpartonPose2D)
                                 SpartonPose2D_D.theta =SpartonPose2D.theta/math.pi *180.
                                 PosD_pub.publish(SpartonPose2D_D)
-                                print(SpartonPose2D_D.theta)
                                 PosD_pubD.publish(SpartonPose2D_D.theta)
                                 # reset checksum_error_counter when you have good data
                                 checksum_error_counter=0

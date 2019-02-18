@@ -20,8 +20,11 @@ class headingAction(object):
             execute_cb = self.headingCallback, \
             auto_start = False)
         self._hs.start()
+	#self.heading_value
 
     def heading_cb(self, data):
+	if data.data is None:
+            return
         self.heading_value = data.data
 
     def headingCallback(self, goal):
@@ -39,8 +42,8 @@ class headingAction(object):
 
             # Logic
             start = int(time.time())
-            while(abs(goal.heading_setpoint - self.heading_value) < 2):
-                if(int(time.time()) == start + 10):
+            while(abs(goal.heading_setpoint - self.heading_value) < 5):
+                if(int(time.time()) == start + 5):
                     successt = True
                     rospy.loginfo("10 sec over")
                     break

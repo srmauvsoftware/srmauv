@@ -1,11 +1,11 @@
 <launch>
 
 <node name="controller" pkg="pid" type="controller" ns="heave_controller" output="screen" >
-      <param name="Kp" value="1.5" />
-      <param name="Ki" value="0.6" />
-      <param name="Kd" value="1.95" />
-      <param name="upper_limit" value="168" />
-      <param name="lower_limit" value="-168" />
+      <param name="Kp" value="5" />
+      <param name="Ki" value="0.029" />
+      <param name="Kd" value="9" />
+      <param name="upper_limit" value="50" />
+      <param name="lower_limit" value="-50" />
       <param name="windup_limit" value="168" />
       <param name="max_loop_frequency" value="100.0" />
       <param name="min_loop_frequency" value="100.0" />

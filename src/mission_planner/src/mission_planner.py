@@ -11,21 +11,28 @@ from Sway import Sway
 #from Surge import Surge
 import time
 from DetectBuoy import DetectBuoy
+from std_msgs.msg import Float64
 
 #from ImageTask import ImageTask
 
+boolean = 0
+
 def main():
-    rospy.init_node('mission_planner')
     sm = smach.StateMachine(outcomes=['mission_complete', 'mission_failed', 'aborted'])
 
     theta = 0
 
     with sm:
         # smach.StateMachine.add('TORPEDO', Torpedo(), transitions={'torpedo_success':'mission_complete'})
-        smach.StateMachine.add('DETECTBUOY', DetectBuoy(), transitions={'buoy_success':'mission_complete', 'buoy_retry': 'DETECTBUOY'})
-        #Sink (sm, 'SINK1', 530, 'HEADING1')
-        #Heading(sm, 'HEADING1', theta, 'FORWARD1')
-        #Forward(sm, 'FORWARD1', 14, 'DETECTBUOY')
+       # smach.StateMachine.add('DETECTBUOY', DetectBuoy(), transitions={'buoy_success':'mission_complete', 'buoy_retry': 'DETECTBUOY'})
+        Sink (sm, 'SINK1', 515, 'HEADING1')
+        Heading(sm, 'HEADING1', 75,'FORWARD1')
+        Forward(sm, 'FORWARD1', 6, 'FORWARD2')
+	Forward(sm, 'FORWARD2', 12, 'mission_complete')
+	#Heading(sm, 'HEADING2', 90, 'FORWARD2')
+	#Forward(sm, 'FORWARD2', 10, 'HEADING3')
+	#Heading(sm, 'HEADING3', 90, 'FORWARD3')
+	#Forward(sm, 'FORWARD3', 15, 'mission_complete')
         #DetectBuoy(sm, 'DETECTBUOY', 'FORWARD2')
         #Forward(sm, 'FORWARD2', 14, 'HEADING2')
         #Heading(sm, 'HEADING2', theta + 45, 'FORWARD3')
@@ -33,7 +40,7 @@ def main():
         #torpedo fire
         #Sway(sm, 'SWAY1', -5, 'FORWARD4')
         #Forward(sm, 'FORWARD4', 10, 'SINK2')
-        #Sink (sm, 'SINK2', 510, 'mission_complete') #resurface
+        #Sink (sm, 'SINK2', 525, 'mission_complete') #resurface
 
         #it = ImageTask() # Image Task should return User data which should be
         # further mapped to Heading etc states
@@ -43,8 +50,21 @@ def main():
         # start introspection server by - rosrun smach_viewer smach_viewer.py
         sis.start()
         outcome = sm.execute()
+	boolean = 1
 
-    rospy.spin()
     sis.stop()
+    rospy.loginfo("Mission Complete")
+
+def callback(data):
+    rospy.loginfo(data.data)
+    if(data.data == 1):
+	if boolean == 0:
+	    main()
+
+def listener():
+    rospy.init_node('mission_planner')
+    rospy.Subscriber("/zsys", Float64, callback)
+    rospy.spin()
+
 if __name__ == '__main__':
-    main()
+    listener()

@@ -98,10 +98,10 @@ def keyDown(data):
     
     elif key == 'w':
 	headingControllerToggle.publish(Bool(False))
-        vt.tfr = 250
-        vt.tfl = 330
-        vt.trr = 330
-        vt.trl = 250
+        vt.tfr = 320
+        vt.tfl = 320
+        vt.trr = 320
+        vt.trl = 320
         print("Moving forward")
         vectorPub.publish(vt)
 
