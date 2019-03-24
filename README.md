@@ -5,11 +5,11 @@
 > SRM Autonomous Underwater Vehicle Code.
 
 <p align='center'>
-  <img src='docs/assets/one.jpg' width='200px'/>
-  <img src='docs/assets/three.jpg' width='91'/>
-  <img src='docs/assets/five.jpg' width='108'/>
-  <img src='docs/assets/four.jpg' width='200'/>
-  <img src='docs/assets/two.jpg' width='200'/>
+  <img src='docs/assets/one.jpg' width='230px'/>
+  <img src='docs/assets/three.jpg' width='121'/>
+  <img src='docs/assets/five.jpg' width='138'/>
+  <img src='docs/assets/four.jpg' width='230'/>
+  <img src='docs/assets/two.jpg' width='230'/>
 </p>
 
 ### About:
