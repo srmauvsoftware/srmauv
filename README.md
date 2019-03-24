@@ -4,9 +4,11 @@
 
 > SRM Autonomous Underwater Vehicle Code.
 
-<img src="docs/assets/IMG_7834.JPG" width=130px>
-<img src="docs/assets/IMG_7834.JPG" width=130px>
-<img src="docs/assets/IMG_7834.JPG" width=130px>
+<p align='center'>
+  <img src='docs/assets/IMG_7834.JPG' width='130px'/>
+  <img src='docs/assets/IMG_7834.JPG' width='130'/>
+  <img src='docs/assets/IMG_7834.JPG' width='130'/>
+</p>
 
 ### About:
 This repository contains the code used by the software team of SRM Autonomous Underwater Vehicle (SRMAUV). Our website is [teamsrmauv.com](http://teamsrmauv.com).
