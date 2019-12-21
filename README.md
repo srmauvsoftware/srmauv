@@ -1,4 +1,4 @@
-<img src="http://teamsrmauv.com/assets/images/auvlogo.png" width=20% align="right">
+<img src="https://www.srmist.edu.in/sites/all/themes/srmuniversity/main_layout/images/logo.png" width=20% align="right">
 
 # ZARNA
 
